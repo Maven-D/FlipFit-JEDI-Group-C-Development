@@ -9,9 +9,10 @@ import java.util.List;
 /**
  * Service class for handling business logic related to a regular Customer.
  */
-public class FlipFitCustomerService {
+public class FlipFitCustomerServiceImpl implements FlipFitCustomerServiceInterface {
 
     private Customer customer;
+    @Override
     public void setCustomer(Customer customer) {this.customer = customer;}
 
     /**
@@ -19,6 +20,7 @@ public class FlipFitCustomerService {
      *
      * @return A list of Booking objects.
      */
+    @Override
     public List<Booking> viewBookings() {
         System.out.println("Fetching bookings for customer ID: " + customer.getUserID());
         // In a real app, this would query the database.
@@ -27,6 +29,7 @@ public class FlipFitCustomerService {
         return new ArrayList<>(customer.getBookingList());
     }
     
+    @Override
     public void addBooking(Booking booking) {
     	customer.getBookingList().add(booking);
 
@@ -39,6 +42,7 @@ public class FlipFitCustomerService {
      * @param booking The booking object to be cancelled.
      * @return true if the booking was successfully cancelled, false otherwise.
      */
+    @Override
     public boolean cancelBooking(String bookingId) {
         // 1. Add a validation check for the input bookingId.
         if (bookingId == null || bookingId.trim().isEmpty()) {

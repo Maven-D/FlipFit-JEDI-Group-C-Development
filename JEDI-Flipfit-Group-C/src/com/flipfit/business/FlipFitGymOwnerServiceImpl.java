@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Service class for handling business logic for a Gym Owner.
  */
-public class FlipFitGymOwnerService {
+public class FlipFitGymOwnerServiceImpl implements FlipFitGymOwnerServiceInterface {
 
     private static List<Booking> allBookings = new ArrayList<>();
     private static List<Gym> allGyms = new ArrayList<>();
@@ -20,6 +20,7 @@ public class FlipFitGymOwnerService {
      * @param gymId The ID of the gym.
      * @return A list of Booking objects for that gym.
      */
+    @Override
     public List<Booking> viewGymBookings(String gymId) {
         System.out.println("Gym Owner fetching bookings for gym ID: " + gymId);
         // This requires linking a booking to a gym.
@@ -33,6 +34,7 @@ public class FlipFitGymOwnerService {
      *
      * @param details The Gym object with updated information.
      */
+    @Override
     public void manageGymDetails(Gym details) {
         for (int i = 0; i < allGyms.size(); i++) {
             if (allGyms.get(i).getGymID().equals(details.getGymID())) {
