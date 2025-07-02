@@ -62,12 +62,12 @@ public class FlipFitApplication {
                 if (user != null) {
                     System.out.println("Login Successful! Welcome, " + user.getName());
                     // Redirect to the appropriate client view based on user type
-                    switch (user) {
-                        case SystemAdmin systemAdmin -> adminClient.showAdminMenu(scanner, systemAdmin);
-                        case GymOwner gymOwner -> gymOwnerClient.showGymOwnerMenu(scanner, gymOwner);
-                        case Customer customer -> customerClient.showCustomerMenu(scanner, customer);
-                        default -> {
-                        }
+                    if (user instanceof SystemAdmin systemAdmin) {
+                        adminClient.showAdminMenu(scanner, systemAdmin);
+                    } else if (user instanceof GymOwner gymOwner) {
+                        gymOwnerClient.showGymOwnerMenu(scanner, gymOwner);
+                    } else if (user instanceof Customer customer) {
+                        customerClient.showCustomerMenu(scanner, customer);
                     }
                 } else {
                     System.out.println("Login Failed. Invalid email or password.");
