@@ -10,70 +10,64 @@ import com.flipfit.bean.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of the UserDAO interface.
- * Simulates a database using an in-memory list.
+ * Simulates a database with hardcoded initial data.
  */
 public class UserDAOImpl implements UserDAO {
 
-    // In-memory list to simulate a database table for all users.
     private static final List<BaseUser> userTable = new ArrayList<>();
 
-    // Static initializer block to pre-populate with hardcoded data.
     static {
-        // System Admin
+        // Roles
+        UserRole adminRole = new UserRole(1, "ADMIN", "System Administrator");
+        UserRole ownerRole = new UserRole(2, "GYM_OWNER", "Gym Owner");
+        UserRole customerRole = new UserRole(3, "CUSTOMER", "End User");
+
+        // Users
         SystemAdmin admin = new SystemAdmin();
         admin.setUserID("admin001");
         admin.setName("Super Admin");
         admin.setEmail("admin@flipfit.com");
-        admin.setPasswordHash("adminpass"); // In a real app, this would be hashed
+        admin.setPasswordHash("adminpass");
+        admin.setRole(adminRole);
         userTable.add(admin);
 
-        // Gym Owner
         GymOwner owner = new GymOwner();
         owner.setUserID("owner001");
         owner.setName("John's Gyms");
         owner.setEmail("owner@flipfit.com");
         owner.setPasswordHash("ownerpass");
+        owner.setRole(ownerRole);
         userTable.add(owner);
 
-        // Customer
         Customer customer = new Customer();
         customer.setUserID("cust001");
         customer.setName("Jane Doe");
         customer.setEmail("customer@flipfit.com");
         customer.setPasswordHash("custpass");
+        customer.setRole(customerRole);
         userTable.add(customer);
     }
 
-
     @Override
-    public void save(BaseUser user) {
-        // --- Database Call ---
-        // String sql = "INSERT INTO users (userId, name, email, passwordHash, role) VALUES (?, ?, ?, ?, ?)";
-        // PreparedStatement stmt = connection.prepareStatement(sql);
-        // stmt.setString(1, user.getUserID());
-        // ... set other parameters ...
-        // stmt.executeUpdate();
-        System.out.println("DAO: Saving user " + user.getName() + " to the database.");
+    public void saveUser(BaseUser user) {
+        System.out.println("DAO: Saving user " + user.getName());
         userTable.add(user);
     }
 
     @Override
     public Optional<BaseUser> findByEmail(String email) {
-        // --- Database Call ---
-        // String sql = "SELECT * FROM users WHERE email = ?";
         System.out.println("DAO: Searching for user with email: " + email);
         return userTable.stream()
-                .filter(u -> u.getEmail().equals(email))
+                .filter(u -> u.getEmail().equalsIgnoreCase(email))
                 .findFirst();
     }
 
     @Override
     public Optional<BaseUser> findById(String userId) {
-        // --- Database Call ---
-        // String sql = "SELECT * FROM users WHERE userId = ?";
         System.out.println("DAO: Searching for user with ID: " + userId);
         return userTable.stream()
                 .filter(u -> u.getUserID().equals(userId))
@@ -81,10 +75,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<BaseUser> findAll() {
-        // --- Database Call ---
-        // String sql = "SELECT * FROM users";
+    public List<BaseUser> getAll() {
         System.out.println("DAO: Fetching all users.");
         return new ArrayList<>(userTable);
+    }
+
+    @Override
+    public List<BaseUser> getByRole(UserRole role) {
+        System.out.println("DAO: Fetching all users with role: " + role.getRoleName());
+        return userTable.stream()
+                .filter(u -> u.getRole().getRoleId() == role.getRoleId())
+                .collect(Collectors.toList());
     }
 }
