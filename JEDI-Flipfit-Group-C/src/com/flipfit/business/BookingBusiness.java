@@ -49,6 +49,7 @@ public class BookingBusiness {
             newBooking.setBookingID(UUID.randomUUID().toString()); // Generate a unique ID
             newBooking.setBookingTime(LocalDateTime.now());
             newBooking.setStatus("Confirmed");
+            newBooking.setSlotID(targetSlot.slotID);
             // To make this fully functional, Booking bean would need customerId, gymId, and slotId fields.
 
             customer.getBookingList().add(newBooking);

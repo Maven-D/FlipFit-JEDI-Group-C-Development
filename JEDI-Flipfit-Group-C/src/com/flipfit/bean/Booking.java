@@ -11,8 +11,16 @@ public class Booking {
     private String bookingID;
     private LocalDateTime bookingTime;
     private String status; // e.g., "Confirmed", "Cancelled"
+    private String slotID;
 
-    // Getters and Setters
+    public String getSlotID() {
+        return slotID;
+    }
+
+    public void setSlotID(String slotID) {
+        this.slotID = slotID;
+    }
+// Getters and Setters
 
     /**
      * Gets the unique identifier for the booking.

@@ -30,6 +30,8 @@ public class CustomerBusiness {
     
     public void addBooking(Booking booking) {
     	customer.getBookingList().add(booking);
+
+
     }
 
     /**
