@@ -39,26 +39,39 @@ public class FlipFitCustomerService {
      * @param booking The booking object to be cancelled.
      * @return true if the booking was successfully cancelled, false otherwise.
      */
-    public boolean cancelBooking(Booking booking) {
-        if (booking == null) {
-            System.out.println("Cannot cancel a null booking.");
+    public boolean cancelBooking(String bookingId) {
+        // 1. Add a validation check for the input bookingId.
+        if (bookingId == null || bookingId.trim().isEmpty()) {
+            System.out.println("Booking ID cannot be null or empty.");
             return false;
         }
-        // Find the booking in the list and update its status.
-        for (Booking b : customer.getBookingList()) {
-            if (b.getBookingID().equals(booking.getBookingID())) {
-                if (!b.getStatus().equalsIgnoreCase("Cancelled")) {
-                    b.setStatus("Cancelled");
-                    System.out.println("Booking " + booking.getBookingID() + " has been cancelled.");
-                    // In a real app, you would also need to increase the seat count for the corresponding timeslot.
-                    return true;
+
+        // 2. Find the booking in the list by iterating and comparing IDs.
+        for (Booking booking : customer.getBookingList()) {
+            // Use the provided bookingId for comparison.
+            if (booking.getBookingID().equals(bookingId)) {
+                
+                // 3. Check if the booking is already cancelled.
+                if (!booking.getStatus().equalsIgnoreCase("Cancelled")) {
+                    // 4. Update the status if not already cancelled.
+                    booking.setStatus("Cancelled");
+                    System.out.println("Booking " + bookingId + " has been cancelled.");
+                    
+                    // In a real app, you would also need to find the corresponding
+                    // timeslot and increase its available seat count.
+                    // e.g., timeSlotService.incrementSeatCount(booking.getTimeSlotId());
+                    
+                    return true; // Successfully cancelled.
                 } else {
-                    System.out.println("Booking " + booking.getBookingID() + " was already cancelled.");
-                    return false;
+                    // The booking was found but was already in a "Cancelled" state.
+                    System.out.println("Booking " + bookingId + " was already cancelled.");
+                    return false; // Indicate that no action was taken.
                 }
             }
         }
-        System.out.println("Booking " + booking.getBookingID() + " not found.");
+
+        // 5. If the loop completes, the booking was not found.
+        System.out.println("Booking " + bookingId + " not found for this customer.");
         return false;
     }
 }
