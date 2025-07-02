@@ -121,6 +121,6 @@ public class CustomerClient {
     	 System.out.print("Enter Booking ID: ");
     	 String bookingId = scanner.nextLine();
     	 System.out.println("Cancelling Booking with ID "+ bookingId);
-    	 customerBusiness.cancelBooking(bookingId);
+    	 flipFitCustomerService.cancelBooking(bookingId);
     }
 }
