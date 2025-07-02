@@ -11,14 +11,14 @@ public class Booking {
     private String bookingID;
     private LocalDateTime bookingTime;
     private String status; // e.g., "Confirmed", "Cancelled"
-    private String slotID;
+    private TimeSlot slot;
 
-    public String getSlotID() {
-        return slotID;
+    public TimeSlot getSlot() {
+        return slot;
     }
 
-    public void setSlotID(String slotID) {
-        this.slotID = slotID;
+    public void setSlot(TimeSlot slot) {
+        this.slot = slot;
     }
 // Getters and Setters
 

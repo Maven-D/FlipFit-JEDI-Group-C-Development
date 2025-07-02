@@ -13,7 +13,16 @@ import java.util.stream.Collectors;
 public class FlipFitGymService {
 
     // In-memory list to simulate a database of all available time slots.
-    private static List<TimeSlot> allTimeSlots = new ArrayList<>();
+    // This is the single source of truth for all time slots.
+    private static final List<TimeSlot> allTimeSlots = new ArrayList<>();
+
+    /**
+     * Public static method to allow other classes to access the master list.
+     * @return The list of all time slots.
+     */
+    public static List<TimeSlot> getAllTimeSlots() {
+        return allTimeSlots;
+    }
 
     /**
      * Gets the available time slots for a specific gym on a given date.

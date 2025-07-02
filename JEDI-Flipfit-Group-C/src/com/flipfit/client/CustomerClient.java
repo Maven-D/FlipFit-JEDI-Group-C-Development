@@ -87,7 +87,7 @@ public class CustomerClient {
         System.out.print("Enter Slot ID to book: ");
         String slotId = scanner.nextLine();
         
-        scanner.close();
+//        scanner.close();
 
         TimeSlot slotToBook = new TimeSlot();
         slotToBook.setSlotID(slotId);
