@@ -38,37 +38,77 @@ public class FlipFitApplication {
         while (true) {
             System.out.println("\n--- Main Menu ---");
             System.out.println("1. Login");
-            System.out.println("2. Exit");
+            System.out.println("2. Registration of Gym Customer");
+            System.out.println("3. Registration of Gym Owner");
+            System.out.println("4. Exit");
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
+            if(choice == 4) {
+                System.out.println("Thank you for using FlipFit. Goodbye!");
+                break;
+            }
+
             if (choice == 1) {
+
+
                 System.out.print("Enter email: ");
                 String email = scanner.nextLine();
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
-
                 BaseUser user = authBusiness.verifyCredentials(email, password);
 
                 if (user != null) {
                     System.out.println("Login Successful! Welcome, " + user.getName());
                     // Redirect to the appropriate client view based on user type
-                    if (user instanceof SystemAdmin) {
-                        adminClient.showAdminMenu(scanner, (SystemAdmin) user);
-                    } else if (user instanceof GymOwner) {
-                        gymOwnerClient.showGymOwnerMenu(scanner, (GymOwner) user);
-                    } else if (user instanceof Customer) {
-                        customerClient.showCustomerMenu(scanner, (Customer) user);
+                    switch (user) {
+                        case SystemAdmin systemAdmin -> adminClient.showAdminMenu(scanner, systemAdmin);
+                        case GymOwner gymOwner -> gymOwnerClient.showGymOwnerMenu(scanner, gymOwner);
+                        case Customer customer -> customerClient.showCustomerMenu(scanner, customer);
+                        default -> {
+                        }
                     }
                 } else {
                     System.out.println("Login Failed. Invalid email or password.");
                 }
-            } else if (choice == 2) {
-                System.out.println("Thank you for using FlipFit. Goodbye!");
-                break;
-            } else {
+            }
+            else if(choice == 2) {
+                System.out.print("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.print("Enter email: ");
+                String email = scanner.nextLine();
+                System.out.print("Enter password: ");
+                String password = scanner.nextLine();
+                Customer customer = new Customer();
+                customer.setUserID(name+email);
+                customer.setName(name);
+                customer.setEmail(email);
+                customer.setPasswordHash(password);
+                customer.setRole(new UserRole(1, "customer", "flipfit gym customer"));
+                authBusiness.registerUser(customer);
+
+
+
+            }
+            else if(choice == 3) {
+                System.out.print("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.print("Enter email: ");
+                String email = scanner.nextLine();
+                System.out.print("Enter password: ");
+                String password = scanner.nextLine();
+                GymOwner owner = new GymOwner();
+                owner.setUserID(name+email);
+                owner.setName(name);
+                owner.setEmail(email);
+                owner.setPasswordHash(password);
+                owner.setRole(new UserRole(2, "gym-owner", "flipfit gym owner"));
+                authBusiness.registerUser(owner);
+
+            }
+            else {
                 System.out.println("Invalid option. Please try again.");
             }
         }
@@ -85,6 +125,7 @@ public class FlipFitApplication {
         admin.setName("Main Admin");
         admin.setEmail("admin@flipfit.com");
         admin.setPasswordHash("admin123"); // In real app, this would be a hash
+        admin.setRole(new UserRole(3, "admin", "flipfit system admin"));
         authBusiness.registerUser(admin);
 
         GymOwner owner = new GymOwner();
@@ -92,6 +133,7 @@ public class FlipFitApplication {
         owner.setName("John's Gyms");
         owner.setEmail("owner@flipfit.com");
         owner.setPasswordHash("owner123");
+        owner.setRole(new UserRole(2, "gym-owner", "flipfit gym owner"));
         authBusiness.registerUser(owner);
 
         Customer customer = new Customer();
@@ -99,6 +141,7 @@ public class FlipFitApplication {
         customer.setName("Alice");
         customer.setEmail("customer@flipfit.com");
         customer.setPasswordHash("cust123");
+        customer.setRole(new UserRole(1, "customer", "flipfit gym customer"));
         authBusiness.registerUser(customer);
 
         // Create a gym managed by the owner
