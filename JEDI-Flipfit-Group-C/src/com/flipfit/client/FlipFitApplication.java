@@ -6,7 +6,6 @@ import com.flipfit.business.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
-import java.util.UUID;
 
 /**
  * The main entry point for the FlipFit application.
@@ -16,12 +15,12 @@ import java.util.UUID;
 public class FlipFitApplication {
 
 //    // Business Logic Handlers
-    private static AuthenticationBusiness authBusiness = new AuthenticationBusiness();
-    private static AdminBusiness adminBusiness = new AdminBusiness();
+    private static FlipFitAuthenticationService authBusiness = new FlipFitAuthenticationService();
+    private static FlipFitAdminService flipFitAdminService = new FlipFitAdminService();
 //    private static GymOwnerBusiness gymOwnerBusiness = new GymOwnerBusiness();
 //    private static CustomerBusiness customerBusiness = new CustomerBusiness();
-    private static GymBusiness gymBusiness = new GymBusiness();
-    private static BookingBusiness bookingBusiness = new BookingBusiness();
+    private static FlipFitGymService flipFitGymService = new FlipFitGymService();
+    private static FlipFitBookingService flipFitBookingService = new FlipFitBookingService();
 
     // Client Views
     private static AdminClient adminClient = new AdminClient();
@@ -149,7 +148,7 @@ public class FlipFitApplication {
         gym.setGymID("gym01");
         gym.setName("Flex Fitness");
         gym.setAddress("123 Muscle St, Workout City");
-        adminBusiness.addGym(gym); // Admin approves/adds the gym
+        flipFitAdminService.addGym(gym); // Admin approves/adds the gym
 
         // Create time slots for the gym
         TimeSlot slot1 = new TimeSlot();
@@ -159,8 +158,8 @@ public class FlipFitApplication {
         slot1.setStartTime(LocalTime.of(9, 0));
         slot1.setEndTime(LocalTime.of(10, 0));
         slot1.setAvailableSeats(10);
-        gymBusiness.addTimeSlot(slot1);
-        bookingBusiness.addTimeSlot(slot1); // Also add to booking business's list
+        flipFitGymService.addTimeSlot(slot1);
+        flipFitBookingService.addTimeSlot(slot1); // Also add to booking business's list
 
         TimeSlot slot2 = new TimeSlot();
         slot2.setSlotID("slot02");
@@ -169,8 +168,8 @@ public class FlipFitApplication {
         slot2.setStartTime(LocalTime.of(10, 0));
         slot2.setEndTime(LocalTime.of(11, 0));
         slot2.setAvailableSeats(5);
-        gymBusiness.addTimeSlot(slot2);
-        bookingBusiness.addTimeSlot(slot2);
+        flipFitGymService.addTimeSlot(slot2);
+        flipFitBookingService.addTimeSlot(slot2);
 
         // Create time slots for the gym
         TimeSlot slot3 = new TimeSlot();
@@ -180,8 +179,8 @@ public class FlipFitApplication {
         slot3.setStartTime(LocalTime.of(9, 0));
         slot3.setEndTime(LocalTime.of(10, 0));
         slot3.setAvailableSeats(10);
-        gymBusiness.addTimeSlot(slot3);
-        bookingBusiness.addTimeSlot(slot3); // Also add to booking business's list
+        flipFitGymService.addTimeSlot(slot3);
+        flipFitBookingService.addTimeSlot(slot3); // Also add to booking business's list
 
         System.out.println("\nInitial data setup complete.\n");
     }

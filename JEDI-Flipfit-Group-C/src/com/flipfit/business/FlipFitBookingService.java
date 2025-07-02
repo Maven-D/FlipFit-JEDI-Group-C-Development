@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * Service class for handling the creation and management of bookings.
  */
-public class BookingBusiness {
+public class FlipFitBookingService {
 
     private static List<Booking> allBookings = new ArrayList<>();
     private static List<TimeSlot> allTimeSlots = new ArrayList<>();
