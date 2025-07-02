@@ -5,12 +5,11 @@ import com.flipfit.bean.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Service class for handling business logic related to a regular Customer.
  */
-public class CustomerBusiness {
+public class FlipFitCustomerService {
 
     private Customer customer;
     public void setCustomer(Customer customer) {this.customer = customer;}

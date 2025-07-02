@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Service class for handling business logic related to Gyms.
  */
-public class GymBusiness {
+public class FlipFitGymService {
 
     // In-memory list to simulate a database of all available time slots.
     private static List<TimeSlot> allTimeSlots = new ArrayList<>();

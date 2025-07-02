@@ -5,12 +5,11 @@ import com.flipfit.bean.Gym;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Service class for handling business logic for a Gym Owner.
  */
-public class GymOwnerBusiness {
+public class FlipFitGymOwnerService {
 
     private static List<Booking> allBookings = new ArrayList<>();
     private static List<Gym> allGyms = new ArrayList<>();
