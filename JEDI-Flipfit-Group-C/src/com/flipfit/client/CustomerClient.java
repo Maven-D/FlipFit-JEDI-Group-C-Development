@@ -12,10 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Client view for the Customer.
- * Provides a menu-driven interface for customer-specific actions like booking.
- */
 public class CustomerClient {
 
     private GymBusiness gymBusiness = new GymBusiness();
@@ -23,11 +19,6 @@ public class CustomerClient {
     private CustomerBusiness customerBusiness = new CustomerBusiness();
 
 
-    /**
-     * Displays the main menu for the Customer and handles input.
-     * @param scanner The Scanner object for user input.
-     * @param customer The currently logged-in Customer.
-     */
     public void showCustomerMenu(Scanner scanner, Customer customer) {
 
         customerBusiness.setCustomer(customer);
@@ -37,11 +28,12 @@ public class CustomerClient {
             System.out.println("1. View Available Gym Slots");
             System.out.println("2. Book a Slot");
             System.out.println("3. View My Bookings");
-            System.out.println("4. Logout");
+            System.out.println("4. Cancel a booking");
+            System.out.println("5. Logout");
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -54,8 +46,12 @@ public class CustomerClient {
                     viewMyBookings(customer);
                     break;
                 case 4:
+                	cancelBooking(scanner);
+                	break;
+                case 5:
+                	scanner.close();
                     System.out.println("Logging out...");
-                    return; // Exit the customer menu
+                    return;
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
@@ -68,6 +64,7 @@ public class CustomerClient {
         String gymId = scanner.nextLine();
         System.out.print("Enter Date (yyyy-MM-dd): ");
         LocalDate date = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
+        scanner.close();
 
         List<TimeSlot> slots = gymBusiness.getAvailability(gymId, date);
         if (slots.isEmpty()) {
@@ -89,9 +86,9 @@ public class CustomerClient {
         System.out.println("\n-- Book a Slot --");
         System.out.print("Enter Slot ID to book: ");
         String slotId = scanner.nextLine();
+        
+        scanner.close();
 
-        // This is a simplified approach. A real app would fetch the slot object from the DB.
-        // We will create a dummy slot object to pass to the service.
         TimeSlot slotToBook = new TimeSlot();
         slotToBook.setSlotID(slotId);
 
@@ -117,5 +114,13 @@ public class CustomerClient {
                         booking.getStatus());
             }
         }
+    }
+    
+    
+    private void cancelBooking(Scanner scanner) {
+    	 System.out.print("Enter Booking ID: ");
+    	 String bookingId = scanner.nextLine();
+    	 System.out.println("Cancelling Booking with ID "+ bookingId);
+    	 customerBusiness.cancelBooking(bookingId);
     }
 }
