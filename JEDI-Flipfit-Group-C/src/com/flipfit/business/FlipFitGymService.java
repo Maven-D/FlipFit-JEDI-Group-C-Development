@@ -42,6 +42,7 @@ public class FlipFitGymService {
      * Helper method to add a timeslot to the system.
      * @param slot The TimeSlot to add.
      */
+
     public void addTimeSlot(TimeSlot slot) {
         allTimeSlots.add(slot);
         System.out.println("New timeslot added for gym " + slot.getGymID() + " at " + slot.getStartTime());

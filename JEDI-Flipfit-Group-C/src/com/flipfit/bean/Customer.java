@@ -9,6 +9,8 @@ import java.util.List;
  * and is used for customers who book gym slots.
  */
 public class Customer extends BaseUser {
+    private List<Booking> bookingList = new ArrayList<>(); // TODO: Shift it to Business
+
     public List<Booking> getBookingList() {
         return bookingList;
     }
@@ -22,7 +24,7 @@ public class Customer extends BaseUser {
     // According to the class diagram, it does not have any additional
     // attributes of its own. Business logic related to a User
     // will be handled in the service/business layer.
-    private List<Booking> bookingList = new ArrayList<>();
+
 
 
 }

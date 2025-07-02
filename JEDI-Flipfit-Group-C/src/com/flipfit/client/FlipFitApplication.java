@@ -176,11 +176,12 @@ public class FlipFitApplication {
         slot3.setSlotID("slot03");
         slot3.setGymID("gym02");
         slot3.setDate(LocalDate.now());
-        slot3.setStartTime(LocalTime.of(9, 0));
-        slot3.setEndTime(LocalTime.of(10, 0));
+        slot3.setStartTime(LocalTime.of(9, 30));
+        slot3.setEndTime(LocalTime.of(10, 30));
         slot3.setAvailableSeats(10);
         flipFitGymService.addTimeSlot(slot3);
         flipFitBookingService.addTimeSlot(slot3); // Also add to booking business's list
+
 
         System.out.println("\nInitial data setup complete.\n");
     }

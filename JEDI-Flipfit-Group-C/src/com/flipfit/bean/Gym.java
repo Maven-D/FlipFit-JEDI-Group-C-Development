@@ -9,6 +9,15 @@ public class Gym {
     private String gymID;
     private String name;
     private String address;
+    private String gymOwnerID;
+
+    public String getGymOwnerID() {
+        return gymOwnerID;
+    }
+
+    public void setGymOwnerID(String gymOwnerID) {
+        this.gymOwnerID = gymOwnerID;
+    }
 
     // Getters and Setters
 
