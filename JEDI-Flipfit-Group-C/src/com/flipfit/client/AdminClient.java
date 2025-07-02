@@ -3,7 +3,7 @@ package com.flipfit.client;
 import com.flipfit.bean.Customer;
 import com.flipfit.bean.Gym;
 import com.flipfit.bean.SystemAdmin;
-import com.flipfit.business.AdminBusiness;
+import com.flipfit.business.FlipFitAdminService;
 
 import java.util.Scanner;
 import java.util.UUID;
@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 public class AdminClient {
 
-    private AdminBusiness adminBusiness = new AdminBusiness();
+    private FlipFitAdminService flipFitAdminService = new FlipFitAdminService();
 
     /**
      * Displays the main menu for the System Administrator and handles input.
@@ -61,7 +61,7 @@ public class AdminClient {
         newGym.setName(name);
         newGym.setAddress(address);
 
-        adminBusiness.addGym(newGym);
+        flipFitAdminService.addGym(newGym);
         System.out.println("Gym '" + name + "' added successfully!");
     }
 
@@ -80,7 +80,7 @@ public class AdminClient {
         newCustomer.setEmail(email);
         newCustomer.setPasswordHash(password); // In real app, hash this
 
-        adminBusiness.addCustomer(newCustomer);
+        flipFitAdminService.addCustomer(newCustomer);
         System.out.println("Customer '" + name + "' added successfully!");
     }
 }

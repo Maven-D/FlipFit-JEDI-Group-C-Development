@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Service class for handling business logic for a System Administrator.
  */
-public class AdminBusiness {
+public class FlipFitAdminService {
 
     // In-memory lists to simulate database tables.
     private static List<BaseUser> allUsers = new ArrayList<>();
