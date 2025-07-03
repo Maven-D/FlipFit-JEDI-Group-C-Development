@@ -9,7 +9,7 @@ import java.util.List;
  * Service class to handle user authentication logic.
  * This class provides methods to verify user credentials and manage tokens.
  */
-public class FlipFitAuthenticationService {
+public class FlipFitAuthenticationServiceImpl implements FlipfitAuthenticationServiceInterface {
 
     // In-memory list to simulate a database of users.
     private static List<BaseUser> users = new ArrayList<>();
@@ -23,7 +23,8 @@ public class FlipFitAuthenticationService {
      * @param password The user's plain-text password.
      * @return The BaseUser object if credentials are valid, otherwise null.
      */
-    public BaseUser verifyCredentials(String email, String password) {
+    @Override
+	public BaseUser verifyCredentials(String email, String password) {
         System.out.println("Attempting to verify credentials for email: " + email);
         for (BaseUser user : users) {
             // In a real app, compare password with a hashed version.
@@ -45,7 +46,8 @@ public class FlipFitAuthenticationService {
      * @param token The token string to validate.
      * @return The BaseUser associated with the token if valid, otherwise null.
      */
-    public BaseUser validateToken(String token) {
+    @Override
+	public BaseUser validateToken(String token) {
         // In a real application, you would decode a JWT or look up a session token.
         // For this example, we'll assume the token is the user's ID.
         System.out.println("Validating token: " + token);
@@ -64,7 +66,8 @@ public class FlipFitAuthenticationService {
      * This would be handled by a data access layer in a real app.
      * @param user The user to add.
      */
-    public void registerUser(BaseUser user) {
+    @Override
+	public void registerUser(BaseUser user) {
         users.add(user);
         System.out.println("User registered: " + user.getName());
     }

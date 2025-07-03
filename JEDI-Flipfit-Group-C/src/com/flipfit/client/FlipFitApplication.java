@@ -15,12 +15,12 @@ import java.util.Scanner;
 public class FlipFitApplication {
 
 //    // Business Logic Handlers
-    private static FlipFitAuthenticationService authBusiness = new FlipFitAuthenticationService();
-    private static FlipFitAdminService flipFitAdminService = new FlipFitAdminService();
+    private static FlipfitAuthenticationServiceInterface authBusiness = new FlipFitAuthenticationServiceImpl();
+    private static FlipFitAdminServiceInterface flipFitAdminService = new FlipFitAdminServiceImpl();
 //    private static GymOwnerBusiness gymOwnerBusiness = new GymOwnerBusiness();
 //    private static CustomerBusiness customerBusiness = new CustomerBusiness();
-    private static FlipFitGymService flipFitGymService = new FlipFitGymService();
-    private static FlipFitBookingService flipFitBookingService = new FlipFitBookingService();
+    private static FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
+    private static FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl();
 
     // Client Views
     private static AdminClient adminClient = new AdminClient();

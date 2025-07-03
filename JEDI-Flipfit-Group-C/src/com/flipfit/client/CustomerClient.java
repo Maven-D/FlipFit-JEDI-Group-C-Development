@@ -3,9 +3,12 @@ package com.flipfit.client;
 import com.flipfit.bean.Booking;
 import com.flipfit.bean.Customer;
 import com.flipfit.bean.TimeSlot;
-import com.flipfit.business.FlipFitBookingService;
-import com.flipfit.business.FlipFitCustomerService;
-import com.flipfit.business.FlipFitGymService;
+import com.flipfit.business.FlipFitBookingServiceImpl;
+import com.flipfit.business.FlipFitBookingServiceInterface;
+import com.flipfit.business.FlipFitCustomerServiceImpl;
+import com.flipfit.business.FlipFitCustomerServiceInterface;
+import com.flipfit.business.FlipFitGymServiceImpl;
+import com.flipfit.business.FlipFitGymServiceInterface;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +17,9 @@ import java.util.Scanner;
 
 public class CustomerClient {
 
-    private FlipFitGymService flipFitGymService = new FlipFitGymService();
-    private FlipFitBookingService flipFitBookingService = new FlipFitBookingService();
-    private FlipFitCustomerService flipFitCustomerService = new FlipFitCustomerService();
+    private FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
+    private FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl();
+    private FlipFitCustomerServiceInterface flipFitCustomerService = new FlipFitCustomerServiceImpl();
 
 
     public void showCustomerMenu(Scanner scanner, Customer customer) {

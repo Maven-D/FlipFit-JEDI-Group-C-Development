@@ -9,17 +9,19 @@ import java.util.List;
 /**
  * Service class for handling business logic related to a regular Customer.
  */
-public class FlipFitCustomerService {
+public class FlipFitCustomerServiceImpl implements FlipFitCustomerServiceInterface {
 
     private Customer customer;
-    public void setCustomer(Customer customer) {this.customer = customer;}
+    @Override
+	public void setCustomer(Customer customer) {this.customer = customer;}
 
     /**
      * Retrieves all bookings made by a specific customer.
      *
      * @return A list of Booking objects.
      */
-    public List<Booking> viewBookings() {
+    @Override
+	public List<Booking> viewBookings() {
         System.out.println("Fetching bookings for customer ID: " + customer.getUserID());
         // In a real app, this would query the database.
         // For now, we filter the master list of bookings.
@@ -27,7 +29,8 @@ public class FlipFitCustomerService {
         return new ArrayList<>(customer.getBookingList());
     }
     
-    public void addBooking(Booking booking) {
+    @Override
+	public void addBooking(Booking booking) {
     	customer.getBookingList().add(booking);
 
 
@@ -39,7 +42,8 @@ public class FlipFitCustomerService {
      * @param booking The booking object to be cancelled.
      * @return true if the booking was successfully cancelled, false otherwise.
      */
-    public boolean cancelBooking(String bookingId) {
+    @Override
+	public boolean cancelBooking(String bookingId) {
         // 1. Add a validation check for the input bookingId.
         if (bookingId == null || bookingId.trim().isEmpty()) {
             System.out.println("Booking ID cannot be null or empty.");

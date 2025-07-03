@@ -3,7 +3,8 @@ package com.flipfit.client;
 import com.flipfit.bean.Customer;
 import com.flipfit.bean.Gym;
 import com.flipfit.bean.SystemAdmin;
-import com.flipfit.business.FlipFitAdminService;
+import com.flipfit.business.FlipFitAdminServiceImpl;
+import com.flipfit.business.FlipFitAdminServiceInterface;
 
 import java.util.Scanner;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
  */
 public class AdminClient {
 
-    private FlipFitAdminService flipFitAdminService = new FlipFitAdminService();
+    private FlipFitAdminServiceInterface flipFitAdminService = new FlipFitAdminServiceImpl();
 
     /**
      * Displays the main menu for the System Administrator and handles input.

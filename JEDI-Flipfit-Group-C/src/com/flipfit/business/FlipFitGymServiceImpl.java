@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Service class for handling business logic related to Gyms.
  */
-public class FlipFitGymService {
+public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
 
     // In-memory list to simulate a database of all available time slots.
     // This is the single source of truth for all time slots.
@@ -31,7 +31,8 @@ public class FlipFitGymService {
      * @param date The date for which to check availability.
      * @return A list of available TimeSlot objects.
      */
-    public List<TimeSlot> getAvailability(String gymId, LocalDate date) {
+    @Override
+	public List<TimeSlot> getAvailability(String gymId, LocalDate date) {
         System.out.println("Fetching availability for gym ID: " + gymId + " on date: " + date);
         return allTimeSlots.stream()
                 .filter(slot -> slot.getGymID().equals(gymId) && slot.getDate().isEqual(date) && slot.getAvailableSeats() > 0)
@@ -42,7 +43,8 @@ public class FlipFitGymService {
      * Helper method to add a timeslot to the system.
      * @param slot The TimeSlot to add.
      */
-    public void addTimeSlot(TimeSlot slot) {
+    @Override
+	public void addTimeSlot(TimeSlot slot) {
         allTimeSlots.add(slot);
         System.out.println("New timeslot added for gym " + slot.getGymID() + " at " + slot.getStartTime());
     }

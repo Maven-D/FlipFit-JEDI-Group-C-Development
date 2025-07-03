@@ -2,8 +2,10 @@ package com.flipfit.client;
 
 import com.flipfit.bean.GymOwner;
 import com.flipfit.bean.TimeSlot;
-import com.flipfit.business.FlipFitBookingService;
-import com.flipfit.business.FlipFitGymService;
+import com.flipfit.business.FlipFitBookingServiceImpl;
+import com.flipfit.business.FlipFitBookingServiceInterface;
+import com.flipfit.business.FlipFitGymServiceImpl;
+import com.flipfit.business.FlipFitGymServiceInterface;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,8 +19,8 @@ import java.util.UUID;
  */
 public class GymOwnerClient {
 
-    private FlipFitGymService flipFitGymService = new FlipFitGymService();
-    private FlipFitBookingService flipFitBookingService = new FlipFitBookingService(); // To add slots to booking business
+    private FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
+    private FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl(); // To add slots to booking business
 
     /**
      * Displays the main menu for the Gym Owner and handles input.
