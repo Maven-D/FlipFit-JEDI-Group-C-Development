@@ -60,6 +60,10 @@ public interface FlipFitAdminServiceInterface {
      * @return A List of all GymOwner objects.
      */
     List<GymOwner> getAllGymOwners();
+    
+    public void addGym(Gym gym);
+    
+    public void addGymOwner(GymOwner owner);
 
     /**
      * Approves a single pending gym owner.

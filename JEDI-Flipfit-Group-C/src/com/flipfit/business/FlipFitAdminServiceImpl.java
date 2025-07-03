@@ -73,6 +73,28 @@ public class FlipFitAdminServiceImpl implements FlipFitAdminServiceInterface {
         allGyms.add(gym3);
     }
 
+    /**
+     * Adds a new gym to the system. The gym will be in PENDING status by default.
+     * @param gym The Gym object to add.
+     */
+    public void addGym(Gym gym) {
+        // New gyms are added with a pending status by default
+        gym.setApprovalStatus("PENDING");
+        allGyms.add(gym);
+        System.out.println("New gym added for approval: " + gym.getName());
+    }
+
+    /**
+     * Adds a new gym owner to the system. The owner will be in PENDING status by default.
+     * @param owner The GymOwner object to add.
+     */
+    public void addGymOwner(GymOwner owner) {
+        // New owners are added with a pending status by default
+        owner.setApprovalStatus("PENDING");
+        allGymOwners.add(owner);
+        System.out.println("New gym owner added for approval: " + owner.getName());
+    }
+
     @Override
     public List<Gym> getPendingGyms() {
         System.out.println("Fetching gyms pending approval...");
