@@ -1,6 +1,5 @@
 package com.flipfit.business;
 
-<<<<<<< HEAD
 import java.util.List;
 
 import com.flipfit.bean.Booking;
@@ -24,15 +23,3 @@ public interface FlipFitGymOwnerServiceInterface {
 	void manageGymDetails(Gym details);
 
 }
-=======
-import com.flipfit.bean.Booking;
-import com.flipfit.bean.Gym;
-
-import java.util.List;
-
-public interface FlipFitGymOwnerServiceInterface {
-    List<Booking> viewGymBookings(String gymId);
-
-    void manageGymDetails(Gym details);
-}
->>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0

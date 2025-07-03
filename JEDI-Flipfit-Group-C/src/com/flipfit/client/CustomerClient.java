@@ -1,19 +1,8 @@
 package com.flipfit.client;
 
-import com.flipfit.bean.Booking;
-import com.flipfit.bean.Customer;
-import com.flipfit.bean.TimeSlot;
-import com.flipfit.business.FlipFitBookingServiceImpl;
-<<<<<<< HEAD
-import com.flipfit.business.FlipFitBookingServiceInterface;
-import com.flipfit.business.FlipFitCustomerServiceImpl;
-import com.flipfit.business.FlipFitCustomerServiceInterface;
-import com.flipfit.business.FlipFitGymServiceImpl;
-import com.flipfit.business.FlipFitGymServiceInterface;
-=======
-import com.flipfit.business.FlipFitCustomerServiceImpl;
-import com.flipfit.business.FlipFitGymServiceImpl;
->>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
+import com.flipfit.bean.*;
+import com.flipfit.business.*;
+
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,15 +11,15 @@ import java.util.Scanner;
 
 public class CustomerClient {
 
-<<<<<<< HEAD
+
     private FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
     private FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl();
     private FlipFitCustomerServiceInterface flipFitCustomerService = new FlipFitCustomerServiceImpl();
-=======
+
     private FlipFitGymServiceImpl flipFitGymServiceImpl = new FlipFitGymServiceImpl();
     private FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl();
     private FlipFitCustomerServiceImpl flipFitCustomerServiceImpl = new FlipFitCustomerServiceImpl();
->>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
+
 
 
     public void showCustomerMenu(Scanner scanner, Customer customer) {
@@ -100,8 +89,6 @@ public class CustomerClient {
         System.out.println("\n-- Book a Slot --");
         System.out.print("Enter Slot ID to book: ");
         String slotId = scanner.nextLine();
-        
-//        scanner.close();
 
         TimeSlot slotToBook = new TimeSlot();
         slotToBook.setSlotID(slotId);

@@ -28,11 +28,9 @@ public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
      * @return A list of available TimeSlot objects.
      */
     @Override
-<<<<<<< HEAD
+
 	public List<TimeSlot> getAvailability(String gymId, LocalDate date) {
-=======
-    public List<TimeSlot> getAvailability(String gymId, LocalDate date) {
->>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
+
         System.out.println("Fetching availability for gym ID: " + gymId + " on date: " + date);
         return allTimeSlots.stream()
                 .filter(slot -> slot.getGymID().equals(gymId) && slot.getDate().isEqual(date) && slot.getAvailableSeats() > 0)
@@ -44,11 +42,7 @@ public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
      * @param slot The TimeSlot to add.
      */
     @Override
-<<<<<<< HEAD
 	public void addTimeSlot(TimeSlot slot) {
-=======
-    public void addTimeSlot(TimeSlot slot) {
->>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         allTimeSlots.add(slot);
         System.out.println("New timeslot added for gym " + slot.getGymID() + " at " + slot.getStartTime());
     }

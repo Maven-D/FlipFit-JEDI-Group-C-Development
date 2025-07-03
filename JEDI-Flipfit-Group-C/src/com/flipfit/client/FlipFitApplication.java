@@ -15,21 +15,14 @@ import java.util.Scanner;
 public class FlipFitApplication {
 
 //    // Business Logic Handlers
-<<<<<<< HEAD
-    private static FlipfitAuthenticationServiceInterface authBusiness = new FlipFitAuthenticationServiceImpl();
+
+    private static FlipFitAuthenticationServiceInterface authBusiness = new FlipFitAuthenticationServiceImpl();
     private static FlipFitAdminServiceInterface flipFitAdminService = new FlipFitAdminServiceImpl();
 //    private static GymOwnerBusiness gymOwnerBusiness = new GymOwnerBusiness();
 //    private static CustomerBusiness customerBusiness = new CustomerBusiness();
-    private static FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
-    private static FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl();
-=======
-    private static FlipFitAuthenticationServiceImpl authBusiness = new FlipFitAuthenticationServiceImpl();
-    private static FlipFitAdminServiceImpl flipFitAdminServiceImpl = new FlipFitAdminServiceImpl();
-//    private static GymOwnerBusiness gymOwnerBusiness = new GymOwnerBusiness();
-//    private static CustomerBusiness customerBusiness = new CustomerBusiness();
-    private static FlipFitGymServiceImpl flipFitGymServiceImpl = new FlipFitGymServiceImpl();
-    private static FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl();
->>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
+    private static FlipFitGymServiceInterface flipFitGymServiceImpl = new FlipFitGymServiceImpl();
+    private static FlipFitBookingServiceInterface flipFitBookingServiceImpl = new FlipFitBookingServiceImpl();
+
 
     // Client Views
     private static AdminClient adminClient = new AdminClient();
@@ -157,7 +150,7 @@ public class FlipFitApplication {
         gym.setGymID("gym01");
         gym.setName("Flex Fitness");
         gym.setAddress("123 Muscle St, Workout City");
-        flipFitAdminServiceImpl.addGym(gym); // Admin approves/adds the gym
+        flipFitAdminService.addGym(gym); // Admin approves/adds the gym
 
         // Create time slots for the gym
         TimeSlot slot1 = new TimeSlot();

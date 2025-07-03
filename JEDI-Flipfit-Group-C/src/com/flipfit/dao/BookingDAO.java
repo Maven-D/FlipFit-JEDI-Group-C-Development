@@ -1,4 +1,3 @@
-// File: com/flipfit/dao/BookingDAO.java
 package com.flipfit.dao;
 
 import com.flipfit.bean.Booking;

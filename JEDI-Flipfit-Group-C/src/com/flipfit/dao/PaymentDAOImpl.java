@@ -1,4 +1,3 @@
-// File: com/flipfit/dao/PaymentDAOImpl.java
 package com.flipfit.dao;
 
 import com.flipfit.bean.PaymentDetails;
