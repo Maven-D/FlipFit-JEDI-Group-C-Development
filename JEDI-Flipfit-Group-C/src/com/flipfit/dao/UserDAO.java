@@ -15,4 +15,5 @@ public interface UserDAO {
     Optional<BaseUser> findById(String userId);
     List<BaseUser> getAll();
     List<BaseUser> getByRole(UserRole role);
+    void removeUser(BaseUser user);
 }

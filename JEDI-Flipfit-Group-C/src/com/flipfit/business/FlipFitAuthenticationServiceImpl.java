@@ -1,6 +1,8 @@
 package com.flipfit.business;
 
 import com.flipfit.bean.BaseUser;
+import com.flipfit.dao.UserDAO;
+import com.flipfit.dao.UserDAOImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.List;
 public class FlipFitAuthenticationServiceImpl implements FlipFitAuthenticationServiceInterface {
 
     // In-memory list to simulate a database of users.
-    private static List<BaseUser> users = new ArrayList<>();
+    private UserDAO userDAO = new UserDAOImpl();
+//    private static List<BaseUser> users = new UserDAOImpl().getAll();
 
     /**
      * Verifies user credentials against the stored user data.
@@ -26,7 +29,7 @@ public class FlipFitAuthenticationServiceImpl implements FlipFitAuthenticationSe
     @Override
     public BaseUser verifyCredentials(String email, String password) {
         System.out.println("Attempting to verify credentials for email: " + email);
-        for (BaseUser user : users) {
+        for (BaseUser user : userDAO.getAll()) {
             // In a real app, compare password with a hashed version.
             // For this example, we'll do a simple string comparison on the hash.
             // A real implementation: passwordEncoder.matches(password, user.getPasswordHash())
@@ -51,7 +54,7 @@ public class FlipFitAuthenticationServiceImpl implements FlipFitAuthenticationSe
         // In a real application, you would decode a JWT or look up a session token.
         // For this example, we'll assume the token is the user's ID.
         System.out.println("Validating token: " + token);
-        for (BaseUser user : users) {
+        for (BaseUser user : userDAO.getAll()) {
             if (user.getUserID().equals(token)) {
                 System.out.println("Token is valid for user: " + user.getName());
                 return user;
@@ -68,7 +71,7 @@ public class FlipFitAuthenticationServiceImpl implements FlipFitAuthenticationSe
      */
     @Override
     public void registerUser(BaseUser user) {
-        users.add(user);
+        userDAO.saveUser(user);
         System.out.println("User registered: " + user.getName());
     }
 }

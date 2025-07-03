@@ -11,9 +11,9 @@ public interface FlipFitGymServiceInterface {
      *
      * @return The list of all time slots.
      */
-    static List<TimeSlot> getAllTimeSlots() {
-        return FlipFitGymServiceImpl.getAllTimeSlots();
-    }
+//    static List<TimeSlot> getAllTimeSlots() {
+//        return FlipFitGymServiceImpl.getAllTimeSlots();
+//    }
 
     List<TimeSlot> getAvailability(String gymId, LocalDate date);
 

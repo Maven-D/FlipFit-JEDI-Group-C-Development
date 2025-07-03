@@ -3,6 +3,10 @@ package com.flipfit.business;
 import com.flipfit.bean.BaseUser;
 import com.flipfit.bean.Customer;
 import com.flipfit.bean.Gym;
+import com.flipfit.dao.GymDAO;
+import com.flipfit.dao.GymDAOImpl;
+import com.flipfit.dao.UserDAO;
+import com.flipfit.dao.UserDAOImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +17,10 @@ import java.util.List;
 public class FlipFitAdminServiceImpl implements FlipFitAdminServiceInterface {
 
     // In-memory lists to simulate database tables.
-    private static List<BaseUser> allUsers = new ArrayList<>();
-    private static List<Gym> allGyms = new ArrayList<>();
+    private UserDAO userDAO = new UserDAOImpl();
+//    private static List<BaseUser> allUsers = new ArrayList<>();
+    private GymDAO gymDAO = new GymDAOImpl();
+//    private List<Gym> allGyms = gymDAO.getAll();
 
     /**
      * Adds a new customer to the system.
@@ -22,19 +28,19 @@ public class FlipFitAdminServiceImpl implements FlipFitAdminServiceInterface {
      */
     @Override
     public void addCustomer(Customer customer) {
-        allUsers.add(customer);
+//        allUsers.add(customer);
+        userDAO.saveUser(customer);
         System.out.println("Admin added a new customer: " + customer.getName());
     }
 
     /**
      * Removes a customer from the system.
      * @param customer The Customer object to remove.
-     * @return true if removal was successful, false otherwise.
      */
     @Override
-    public boolean removeCustomer(Customer customer) {
+    public void removeCustomer(Customer customer) {
         System.out.println("Admin attempting to remove customer: " + customer.getName());
-        return allUsers.removeIf(u -> u.getUserID().equals(customer.getUserID()));
+        userDAO.removeUser(customer);
     }
 
     /**
@@ -43,7 +49,7 @@ public class FlipFitAdminServiceImpl implements FlipFitAdminServiceInterface {
      */
     @Override
     public void addGym(Gym gym) {
-        allGyms.add(gym);
+        gymDAO.save(gym);
         System.out.println("Admin added a new gym: " + gym.getName());
     }
 
@@ -55,6 +61,7 @@ public class FlipFitAdminServiceImpl implements FlipFitAdminServiceInterface {
     @Override
     public boolean removeGym(Gym gym) {
         System.out.println("Admin attempting to remove gym: " + gym.getName());
-        return allGyms.removeIf(g -> g.getGymID().equals(gym.getGymID()));
+        gymDAO.remove(gym.getGymID());
+        return true;
     }
 }

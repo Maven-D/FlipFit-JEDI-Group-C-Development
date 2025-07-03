@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-public class CustomerClient {
+public class FlipFitCustomerMenu {
 
     private FlipFitGymServiceImpl flipFitGymServiceImpl = new FlipFitGymServiceImpl();
     private FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl();
@@ -49,7 +49,6 @@ public class CustomerClient {
                 	cancelBooking(scanner);
                 	break;
                 case 5:
-                	scanner.close();
                     System.out.println("Logging out...");
                     return;
                 default:
@@ -64,14 +63,13 @@ public class CustomerClient {
         String gymId = scanner.nextLine();
         System.out.print("Enter Date (yyyy-MM-dd): ");
         LocalDate date = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
-        scanner.close();
 
         List<TimeSlot> slots = flipFitGymServiceImpl.getAvailability(gymId, date);
         if (slots.isEmpty()) {
             System.out.println("No available slots for this gym on the selected date.");
         } else {
             System.out.println("Available Slots:");
-            System.out.printf("%-10s %-12s %-12s %-10s%n", "Slot ID", "Start Time", "End Time", "Seats");
+            System.out.printf("%-10s\t\t\t\t\t\t %-12s\t\t\t\t\t\t %-12s\t\t\t\t\t\t %-10s\t\t\t\t\t\t%n", "Slot ID", "Start Time", "End Time", "Seats");
             for (TimeSlot slot : slots) {
                 System.out.printf("%-10s %-12s %-12s %-10d%n",
                         slot.getSlotID(),

@@ -23,15 +23,15 @@ public class FlipFitApplication {
     private static FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl();
 
     // Client Views
-    private static AdminClient adminClient = new AdminClient();
-    private static GymOwnerClient gymOwnerClient = new GymOwnerClient();
-    private static CustomerClient customerClient = new CustomerClient();
+    private static FlipFitAdminMenu flipFitAdminMenu = new FlipFitAdminMenu();
+    private static FlipFitGymOwnerMenu flipFitGymOwnerMenu = new FlipFitGymOwnerMenu();
+    private static FlipFitCustomerMenu flipFitCustomerMenu = new FlipFitCustomerMenu();
 
     public static void main(String[] args) {
         System.out.println("Welcome to FlipFit Application!");
 
         // Pre-load some data for demonstration purposes
-        setupInitialData();
+//        setupInitialData();
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -63,11 +63,11 @@ public class FlipFitApplication {
                     System.out.println("Login Successful! Welcome, " + user.getName());
                     // Redirect to the appropriate client view based on user type
                     if (user instanceof SystemAdmin systemAdmin) {
-                        adminClient.showAdminMenu(scanner, systemAdmin);
+                        flipFitAdminMenu.showAdminMenu(scanner, systemAdmin);
                     } else if (user instanceof GymOwner gymOwner) {
-                        gymOwnerClient.showGymOwnerMenu(scanner, gymOwner);
+                        flipFitGymOwnerMenu.showGymOwnerMenu(scanner, gymOwner);
                     } else if (user instanceof Customer customer) {
-                        customerClient.showCustomerMenu(scanner, customer);
+                        flipFitCustomerMenu.showCustomerMenu(scanner, customer);
                     }
                 } else {
                     System.out.println("Login Failed. Invalid email or password.");
@@ -85,7 +85,7 @@ public class FlipFitApplication {
                 customer.setName(name);
                 customer.setEmail(email);
                 customer.setPasswordHash(password);
-                customer.setRole(new UserRole(1, "customer", "flipfit gym customer"));
+                customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
                 authBusiness.registerUser(customer);
 
 
@@ -103,7 +103,7 @@ public class FlipFitApplication {
                 owner.setName(name);
                 owner.setEmail(email);
                 owner.setPasswordHash(password);
-                owner.setRole(new UserRole(2, "gym-owner", "flipfit gym owner"));
+                owner.setRole(new UserRole(2, "GYM_OWNER", "Gym Owner"));
                 authBusiness.registerUser(owner);
 
             }
@@ -124,7 +124,7 @@ public class FlipFitApplication {
         admin.setName("Main Admin");
         admin.setEmail("admin@flipfit.com");
         admin.setPasswordHash("admin123"); // In real app, this would be a hash
-        admin.setRole(new UserRole(3, "admin", "flipfit system admin"));
+        admin.setRole(new UserRole(1, "ADMIN", "System Administrator"));
         authBusiness.registerUser(admin);
 
         GymOwner owner = new GymOwner();
@@ -132,7 +132,7 @@ public class FlipFitApplication {
         owner.setName("John's Gyms");
         owner.setEmail("owner@flipfit.com");
         owner.setPasswordHash("owner123");
-        owner.setRole(new UserRole(2, "gym-owner", "flipfit gym owner"));
+        owner.setRole(new UserRole(2, "GYM_OWNER", "Gym Owner"));
         authBusiness.registerUser(owner);
 
         Customer customer = new Customer();
@@ -140,7 +140,7 @@ public class FlipFitApplication {
         customer.setName("Alice");
         customer.setEmail("customer@flipfit.com");
         customer.setPasswordHash("cust123");
-        customer.setRole(new UserRole(1, "customer", "flipfit gym customer"));
+        customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
         authBusiness.registerUser(customer);
 
         // Create a gym managed by the owner
@@ -159,7 +159,7 @@ public class FlipFitApplication {
         slot1.setEndTime(LocalTime.of(10, 0));
         slot1.setAvailableSeats(10);
         flipFitGymServiceImpl.addTimeSlot(slot1);
-        flipFitBookingServiceImpl.addTimeSlot(slot1); // Also add to booking business's list
+//        flipFitBookingServiceImpl.addTimeSlot(slot1); // Also add to booking business's list
 
         TimeSlot slot2 = new TimeSlot();
         slot2.setSlotID("slot02");
@@ -169,7 +169,7 @@ public class FlipFitApplication {
         slot2.setEndTime(LocalTime.of(11, 0));
         slot2.setAvailableSeats(5);
         flipFitGymServiceImpl.addTimeSlot(slot2);
-        flipFitBookingServiceImpl.addTimeSlot(slot2);
+//        flipFitBookingServiceImpl.addTimeSlot(slot2);
 
         // Create time slots for the gym
         TimeSlot slot3 = new TimeSlot();
@@ -180,7 +180,7 @@ public class FlipFitApplication {
         slot3.setEndTime(LocalTime.of(10, 30));
         slot3.setAvailableSeats(10);
         flipFitGymServiceImpl.addTimeSlot(slot3);
-        flipFitBookingServiceImpl.addTimeSlot(slot3); // Also add to booking business's list
+//        flipFitBookingServiceImpl.addTimeSlot(slot3); // Also add to booking business's list
 
 
         System.out.println("\nInitial data setup complete.\n");

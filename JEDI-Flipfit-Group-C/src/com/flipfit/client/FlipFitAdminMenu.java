@@ -12,7 +12,7 @@ import java.util.UUID;
  * Client view for the System Administrator.
  * Provides a menu-driven interface for admin-specific actions.
  */
-public class AdminClient {
+public class FlipFitAdminMenu {
 
     private FlipFitAdminServiceImpl flipFitAdminServiceImpl = new FlipFitAdminServiceImpl();
 

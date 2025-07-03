@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -17,10 +18,10 @@ public class TimeSlotDAOImpl implements TimeSlotDAO {
     private static final List<TimeSlot> timeSlotTable = new ArrayList<>();
 
     static {
-        timeSlotTable.add(new TimeSlot("slot001", "gym01", LocalTime.of(6, 0), LocalTime.of(7, 0), LocalDate.now(), 10));
-        timeSlotTable.add(new TimeSlot("slot002", "gym01", LocalTime.of(7, 0), LocalTime.of(8, 0), LocalDate.now(), 5));
-        timeSlotTable.add(new TimeSlot("slot003", "gym02", LocalTime.of(8, 0), LocalTime.of(9, 0), LocalDate.now(), 15));
-        timeSlotTable.add(new TimeSlot("slot004", "gym02", LocalTime.of(9, 0), LocalTime.of(10, 0), LocalDate.now(), 0));
+        timeSlotTable.add(new TimeSlot(UUID.randomUUID().toString(), "gym01", LocalTime.of(6, 0), LocalTime.of(7, 0), LocalDate.now(), 10));
+        timeSlotTable.add(new TimeSlot(UUID.randomUUID().toString(), "gym01", LocalTime.of(7, 0), LocalTime.of(8, 0), LocalDate.now(), 5));
+        timeSlotTable.add(new TimeSlot(UUID.randomUUID().toString(), "gym02", LocalTime.of(8, 0), LocalTime.of(9, 0), LocalDate.now(), 15));
+        timeSlotTable.add(new TimeSlot(UUID.randomUUID().toString(), "gym02", LocalTime.of(9, 0), LocalTime.of(10, 0), LocalDate.now(), 10));
     }
 
     @Override
@@ -61,5 +62,10 @@ public class TimeSlotDAOImpl implements TimeSlotDAO {
     public boolean delete(String slotId) {
         System.out.println("DAO: Deleting time slot with ID: " + slotId);
         return timeSlotTable.removeIf(ts -> ts.getSlotID().equals(slotId));
+    }
+
+    @Override
+    public List<TimeSlot> getAll() {
+        return new ArrayList<>(timeSlotTable);
     }
 }

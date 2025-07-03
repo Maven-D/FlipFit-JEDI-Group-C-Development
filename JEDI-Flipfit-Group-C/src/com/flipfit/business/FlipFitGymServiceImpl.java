@@ -1,6 +1,8 @@
 package com.flipfit.business;
 
 import com.flipfit.bean.TimeSlot;
+import com.flipfit.dao.TimeSlotDAO;
+import com.flipfit.dao.TimeSlotDAOImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,10 +16,11 @@ public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
 
     // In-memory list to simulate a database of all available time slots.
     // This is the single source of truth for all time slots.
-    private static final List<TimeSlot> allTimeSlots = new ArrayList<>();
+//    private static final List<TimeSlot> allTimeSlots = new TimeSlotDAOImpl().getAll();
+    private TimeSlotDAO timeSlotDAO = new TimeSlotDAOImpl();
 
-    public static List<TimeSlot> getAllTimeSlots() {
-        return allTimeSlots;
+    public List<TimeSlot> getAllTimeSlots() {
+        return timeSlotDAO.getAll();
     }
 
     /**
@@ -29,10 +32,11 @@ public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
      */
     @Override
     public List<TimeSlot> getAvailability(String gymId, LocalDate date) {
-        System.out.println("Fetching availability for gym ID: " + gymId + " on date: " + date);
-        return allTimeSlots.stream()
-                .filter(slot -> slot.getGymID().equals(gymId) && slot.getDate().isEqual(date) && slot.getAvailableSeats() > 0)
-                .collect(Collectors.toList());
+//        System.out.println("Fetching availability for gym ID: " + gymId + " on date: " + date);
+//        return allTimeSlots.stream()
+//                .filter(slot -> slot.getGymID().equals(gymId) && slot.getDate().isEqual(date) && slot.getAvailableSeats() > 0)
+//                .collect(Collectors.toList());
+        return timeSlotDAO.findAvailableByGymIdAndDate(gymId, date);
     }
 
     /**
@@ -41,7 +45,8 @@ public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
      */
     @Override
     public void addTimeSlot(TimeSlot slot) {
-        allTimeSlots.add(slot);
-        System.out.println("New timeslot added for gym " + slot.getGymID() + " at " + slot.getStartTime());
+//        allTimeSlots.add(slot);
+//        System.out.println("New timeslot added for gym " + slot.getGymID() + " at " + slot.getStartTime());
+        timeSlotDAO.save(slot);
     }
 }

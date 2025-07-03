@@ -15,7 +15,7 @@ import java.util.UUID;
  * Client view for the Gym Owner.
  * Provides a menu-driven interface for gym owner-specific actions.
  */
-public class GymOwnerClient {
+public class FlipFitGymOwnerMenu {
 
     private FlipFitGymServiceImpl flipFitGymServiceImpl = new FlipFitGymServiceImpl();
     private FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl(); // To add slots to booking business
@@ -72,7 +72,7 @@ public class GymOwnerClient {
         newSlot.setAvailableSeats(seats);
 
         flipFitGymServiceImpl.addTimeSlot(newSlot);
-        flipFitBookingServiceImpl.addTimeSlot(newSlot); // Ensure booking business is aware of the new slot
+//        flipFitBookingServiceImpl.addTimeSlot(newSlot); // Ensure booking business is aware of the new slot
         System.out.println("Time slot added successfully!");
     }
 }

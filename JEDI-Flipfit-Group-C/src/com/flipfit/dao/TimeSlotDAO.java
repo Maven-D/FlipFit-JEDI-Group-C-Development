@@ -15,4 +15,5 @@ public interface TimeSlotDAO {
     List<TimeSlot> findAvailableByGymIdAndDate(String gymId, LocalDate date);
     boolean update(TimeSlot timeSlot);
     boolean delete(String slotId);
+    List<TimeSlot> getAll();
 }

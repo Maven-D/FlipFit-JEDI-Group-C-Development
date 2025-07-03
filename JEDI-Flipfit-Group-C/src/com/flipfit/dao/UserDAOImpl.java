@@ -87,4 +87,9 @@ public class UserDAOImpl implements UserDAO {
                 .filter(u -> u.getRole().getRoleId() == role.getRoleId())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void removeUser(BaseUser user) {
+        userTable.removeIf(u -> u.getUserID().equals(user.getUserID()));
+    }
 }

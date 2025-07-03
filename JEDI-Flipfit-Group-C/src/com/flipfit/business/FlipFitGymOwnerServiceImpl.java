@@ -2,6 +2,8 @@ package com.flipfit.business;
 
 import com.flipfit.bean.Booking;
 import com.flipfit.bean.Gym;
+import com.flipfit.dao.BookingDAOImpl;
+import com.flipfit.dao.GymDAOImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,9 @@ import java.util.List;
  */
 public class FlipFitGymOwnerServiceImpl implements FlipFitGymOwnerServiceInterface {
 
-    private static List<Booking> allBookings = new ArrayList<>();
-    private static List<Gym> allGyms = new ArrayList<>();
+//    private static List<Booking> allBookings = new BookingDAOImpl().getAll();
+    private BookingDAOImpl bookingDAO = new BookingDAOImpl();
+    private List<Gym> allGyms = new GymDAOImpl().getAll();
 
     /**
      * Retrieves all bookings for a specific gym.
@@ -22,11 +25,12 @@ public class FlipFitGymOwnerServiceImpl implements FlipFitGymOwnerServiceInterfa
      */
     @Override
     public List<Booking> viewGymBookings(String gymId) {
-        System.out.println("Gym Owner fetching bookings for gym ID: " + gymId);
-        // This requires linking a booking to a gym.
-        // We'd need to add gymId to the Booking bean or cross-reference through TimeSlot.
-        // For now, returning an empty list as a placeholder.
-        return new ArrayList<>();
+//        System.out.println("Gym Owner fetching bookings for gym ID: " + gymId);
+//        // This requires linking a booking to a gym.
+//        // We'd need to add gymId to the Booking bean or cross-reference through TimeSlot.
+//        // For now, returning an empty list as a placeholder.
+//        return new ArrayList<>();
+        return bookingDAO.findByGymId(gymId);
     }
 
     /**

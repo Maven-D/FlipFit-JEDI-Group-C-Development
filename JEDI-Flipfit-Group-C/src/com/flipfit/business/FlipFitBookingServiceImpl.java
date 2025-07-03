@@ -3,6 +3,10 @@ package com.flipfit.business;
 import com.flipfit.bean.Booking;
 import com.flipfit.bean.Customer;
 import com.flipfit.bean.TimeSlot;
+import com.flipfit.dao.BookingDAO;
+import com.flipfit.dao.BookingDAOImpl;
+import com.flipfit.dao.TimeSlotDAO;
+import com.flipfit.dao.TimeSlotDAOImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +19,9 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
 
 //    private static List<Booking> allBookings = new ArrayList<>();
 //    private static List<TimeSlot> allTimeSlots = new ArrayList<>();
-    List<TimeSlot> allTimeSlots = FlipFitGymServiceInterface.getAllTimeSlots();
+//    List<TimeSlot> allTimeSlots = new TimeSlotDAOImpl().getAll();
+    private BookingDAO bookingDAO = new BookingDAOImpl();
+    private TimeSlotDAO timeSlotDAO = new TimeSlotDAOImpl();
 
     /**
      * Creates a new booking for a customer for a specific time slot.
@@ -36,7 +42,7 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
 
         // Find the actual timeslot in our "database" to ensure it's the correct instance
         TimeSlot targetSlot = null;
-        for (TimeSlot s : allTimeSlots) {
+        for (TimeSlot s : timeSlotDAO.getAll()) {
             if (s.getSlotID().equals(slot.getSlotID())) {
                 targetSlot = s;
                 break;
@@ -99,6 +105,7 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
             newBooking.setSlot(targetSlot);
 
             // Add the new booking to the customer's personal list
+            bookingDAO.save(newBooking);
             customer.getBookingList().add(newBooking);
 
             System.out.println("Booking successful for " + customer.getName() + " at gym " + targetSlot.getGymID());
@@ -115,6 +122,6 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
      */
     @Override
     public void addTimeSlot(TimeSlot slot) {
-        allTimeSlots.add(slot);
+        timeSlotDAO.save(slot);
     }
 }

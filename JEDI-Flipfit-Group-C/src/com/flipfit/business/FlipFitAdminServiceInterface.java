@@ -6,7 +6,7 @@ import com.flipfit.bean.Gym;
 public interface FlipFitAdminServiceInterface {
     void addCustomer(Customer customer);
 
-    boolean removeCustomer(Customer customer);
+    void removeCustomer(Customer customer);
 
     void addGym(Gym gym);
 
