@@ -69,9 +69,9 @@ public class FlipFitCustomerMenu {
             System.out.println("No available slots for this gym on the selected date.");
         } else {
             System.out.println("Available Slots:");
-            System.out.printf("%-10s\t\t\t\t\t\t %-12s\t\t\t\t\t\t %-12s\t\t\t\t\t\t %-10s\t\t\t\t\t\t%n", "Slot ID", "Start Time", "End Time", "Seats");
+            System.out.printf("%-10s\t\t\t\t\t\t\t\t\t\t %-12s\t %-12s\t\t %-10s\t\t%n", "Slot ID", "Start Time", "End Time", "Seats");
             for (TimeSlot slot : slots) {
-                System.out.printf("%-10s %-12s %-12s %-10d%n",
+                System.out.printf("%-10s\t\t\t %-12s\t %-12s\t\t %-10d%n",
                         slot.getSlotID(),
                         slot.getStartTime(),
                         slot.getEndTime(),
