@@ -1,11 +1,8 @@
 package com.flipfit.client;
 
-import com.flipfit.bean.Booking;
-import com.flipfit.bean.Customer;
-import com.flipfit.bean.TimeSlot;
-import com.flipfit.business.FlipFitBookingServiceImpl;
-import com.flipfit.business.FlipFitCustomerServiceImpl;
-import com.flipfit.business.FlipFitGymServiceImpl;
+import com.flipfit.bean.*;
+import com.flipfit.business.*;
+
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +11,15 @@ import java.util.Scanner;
 
 public class FlipFitCustomerMenu {
 
+
+    private FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
+    private FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl();
+    private FlipFitCustomerServiceInterface flipFitCustomerService = new FlipFitCustomerServiceImpl();
+
     private FlipFitGymServiceImpl flipFitGymServiceImpl = new FlipFitGymServiceImpl();
     private FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl();
     private FlipFitCustomerServiceImpl flipFitCustomerServiceImpl = new FlipFitCustomerServiceImpl();
+
 
 
     public void showCustomerMenu(Scanner scanner, Customer customer) {
@@ -84,8 +87,6 @@ public class FlipFitCustomerMenu {
         System.out.println("\n-- Book a Slot --");
         System.out.print("Enter Slot ID to book: ");
         String slotId = scanner.nextLine();
-        
-//        scanner.close();
 
         TimeSlot slotToBook = new TimeSlot();
         slotToBook.setSlotID(slotId);

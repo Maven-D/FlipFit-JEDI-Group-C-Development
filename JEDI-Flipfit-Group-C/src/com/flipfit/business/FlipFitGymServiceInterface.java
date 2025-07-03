@@ -1,9 +1,9 @@
 package com.flipfit.business;
 
-import com.flipfit.bean.TimeSlot;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import com.flipfit.bean.TimeSlot;
 
 public interface FlipFitGymServiceInterface {
 
