@@ -6,7 +6,6 @@ import com.flipfit.business.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
-import java.util.UUID;
 
 /**
  * The main entry point for the FlipFit application.
@@ -84,11 +83,11 @@ public class FlipFitApplication {
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
                 Customer customer = new Customer();
-                customer.setUserID(UUID.randomUUID().toString());
+                customer.setUserID(name+email);
                 customer.setName(name);
                 customer.setEmail(email);
                 customer.setPasswordHash(password);
-                customer.setRole(new UserRole(1, "CUSTOMER", "End User"));
+                customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
                 authBusiness.registerCustomer(customer);
 
 
@@ -102,7 +101,7 @@ public class FlipFitApplication {
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
                 GymOwner owner = new GymOwner();
-                owner.setUserID(UUID.randomUUID().toString());
+                owner.setUserID(name+email);
                 owner.setName(name);
                 owner.setEmail(email);
                 owner.setPasswordHash(password);
@@ -122,13 +121,13 @@ public class FlipFitApplication {
      */
 //    private static void setupInitialData() {
 //        // Create users
-//        SystemAdmin admin = new SystemAdmin();
-//        admin.setUserID("admin01");
-//        admin.setName("Main Admin");
-//        admin.setEmail("admin@flipfit.com");
-//        admin.setPasswordHash("admin123"); // In real app, this would be a hash
-//        admin.setRole(new UserRole(1, "ADMIN", "System Administrator"));
-//        authBusiness.registerUser(admin);
+////        SystemAdmin admin = new SystemAdmin();
+////        admin.setUserID("admin01");
+////        admin.setName("Main Admin");
+////        admin.setEmail("admin@flipfit.com");
+////        admin.setPasswordHash("admin123"); // In real app, this would be a hash
+////        admin.setRole(new UserRole(1, "ADMIN", "System Administrator"));
+////        authBusiness.registerUser(admin);
 //
 //        GymOwner owner = new GymOwner();
 //        owner.setUserID("owner01");
@@ -136,7 +135,7 @@ public class FlipFitApplication {
 //        owner.setEmail("owner@flipfit.com");
 //        owner.setPasswordHash("owner123");
 //        owner.setRole(new UserRole(2, "GYM_OWNER", "Gym Owner"));
-//        authBusiness.registerUser(owner);
+//        authBusiness.registerGymOwner(owner);
 //
 //        Customer customer = new Customer();
 //        customer.setUserID("cust01");
@@ -144,7 +143,7 @@ public class FlipFitApplication {
 //        customer.setEmail("customer@flipfit.com");
 //        customer.setPasswordHash("cust123");
 //        customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
-//        authBusiness.registerUser(customer);
+//        authBusiness.registerCustomer(customer);
 //
 //        // Create a gym managed by the owner
 //        Gym gym = new Gym();

@@ -1,77 +1,158 @@
 package com.flipfit.dao;
 
 import com.flipfit.bean.Gym;
+import com.flipfit.util.DBConnectionUtil;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
- * Implementation of the GymDAO interface.
+ * JDBC-based implementation of the GymDAO interface.
+ * Handles all database operations for Gym entities.
  */
 public class GymDAOImpl implements GymDAO {
 
-    private static final List<Gym> gymTable = new ArrayList<>();
-
-    static {
-        Gym gym1 = new Gym();
-        gym1.setGymID("gym01");
-        gym1.setName("Flex Fitness");
-        gym1.setAddress("Koramangala, Bangalore");
-        gym1.setGymOwnerID("owner001");
-        gymTable.add(gym1);
-
-        Gym gym2 = new Gym();
-        gym2.setGymID("gym02");
-        gym2.setName("Iron Paradise");
-        gym2.setAddress("Indiranagar, Bangalore");
-        gym2.setGymOwnerID("owner001");
-        gymTable.add(gym2);
-    }
-
     @Override
     public void save(Gym gym) {
-        System.out.println("DAO: Saving gym " + gym.getName());
-        gymTable.add(gym);
+        // Corrected column names to match the schema
+        String sql = "INSERT INTO gyms (gym_id, name, address, owner_id, is_approved, gst_number) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, gym.getGymID());
+            pstmt.setString(2, gym.getName());
+            pstmt.setString(3, gym.getAddress());
+            pstmt.setString(4, gym.getGymOwnerID());
+            pstmt.setString(5, gym.getApprovalStatus());
+            pstmt.setString(6, gym.getGstNumber());
+
+            pstmt.executeUpdate();
+            System.out.println("DAO: Successfully saved gym: " + gym.getName());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Optional<Gym> findByGymId(String gymId) {
-        System.out.println("DAO: Searching for gym with ID: " + gymId);
-        return gymTable.stream()
-                .filter(g -> g.getGymID().equals(gymId))
-                .findFirst();
+        // Corrected column name in WHERE clause
+        String sql = "SELECT * FROM gyms WHERE gym_id = ?";
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, gymId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Gym gym = new Gym();
+                // Corrected column names for ResultSet
+                gym.setGymID(rs.getString("gym_id"));
+                gym.setName(rs.getString("name"));
+                gym.setAddress(rs.getString("address"));
+                gym.setGymOwnerID(rs.getString("owner_id"));
+                gym.setApprovalStatus(rs.getString("is_approved"));
+                gym.setGstNumber(rs.getString("gst_number"));
+                return Optional.of(gym);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
     @Override
     public List<Gym> findByOwnerId(String ownerId) {
-        System.out.println("DAO: Fetching gyms for owner ID: " + ownerId);
-        return gymTable.stream()
-                .filter(g -> g.getGymOwnerID().equals(ownerId))
-                .collect(Collectors.toList());
+        // Corrected column name in WHERE clause
+        String sql = "SELECT * FROM gyms WHERE owner_id = ?";
+        List<Gym> gyms = new ArrayList<>();
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, ownerId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Gym gym = new Gym();
+                // Corrected column names for ResultSet
+                gym.setGymID(rs.getString("gym_id"));
+                gym.setName(rs.getString("name"));
+                gym.setAddress(rs.getString("address"));
+                gym.setGymOwnerID(rs.getString("owner_id"));
+                gym.setApprovalStatus(rs.getString("is_approved"));
+                gym.setGstNumber(rs.getString("gst_number"));
+                gyms.add(gym);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gyms;
     }
 
     @Override
     public List<Gym> getAll() {
-        System.out.println("DAO: Fetching all gyms.");
-        return new ArrayList<>(gymTable);
+        String sql = "SELECT * FROM gyms";
+        List<Gym> gyms = new ArrayList<>();
+        try (Connection conn = DBConnectionUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Gym gym = new Gym();
+                // Corrected column names for ResultSet
+                gym.setGymID(rs.getString("gym_id"));
+                gym.setName(rs.getString("name"));
+                gym.setAddress(rs.getString("address"));
+                gym.setGymOwnerID(rs.getString("owner_id"));
+                gym.setApprovalStatus(rs.getString("is_approved"));
+                gym.setGstNumber(rs.getString("gst_number"));
+                gyms.add(gym);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gyms;
     }
 
     @Override
     public boolean remove(String gymId) {
-        System.out.println("DAO: Removing gym with ID: " + gymId);
-        return gymTable.removeIf(g -> g.getGymID().equals(gymId));
+        // Corrected column name in WHERE clause
+        String sql = "DELETE FROM gyms WHERE gym_id = ?";
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, gymId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean update(Gym gymToUpdate) {
-        System.out.println("DAO: Updating gym with ID: " + gymToUpdate.getGymID());
-        for (int i = 0; i < gymTable.size(); i++) {
-            if (gymTable.get(i).getGymID().equals(gymToUpdate.getGymID())) {
-                gymTable.set(i, gymToUpdate);
-                return true;
-            }
+        // Corrected column names in SET and WHERE clauses
+        String sql = "UPDATE gyms SET name = ?, address = ?, owner_id = ?, is_approved = ?, gst_number = ? WHERE gym_id = ?";
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, gymToUpdate.getName());
+            pstmt.setString(2, gymToUpdate.getAddress());
+            pstmt.setString(3, gymToUpdate.getGymOwnerID());
+            pstmt.setString(4, gymToUpdate.getApprovalStatus());
+            pstmt.setString(5, gymToUpdate.getGstNumber());
+            pstmt.setString(6, gymToUpdate.getGymID());
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 }

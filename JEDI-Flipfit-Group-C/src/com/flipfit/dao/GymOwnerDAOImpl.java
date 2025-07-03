@@ -48,8 +48,8 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
 
     @Override
     public Optional<GymOwner> findById(String userId) {
-        String sql = "SELECT * FROM users WHERE userID = ?";
-        String sql2 = "SELECT * FROM gym_owners WHERE userID = ?";
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        String sql2 = "SELECT * FROM gym_owners WHERE user_id = ?";
 
         try (Connection conn = DBConnectionUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -78,7 +78,7 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
 
             rs2.next();
             owner.setPan(rs2.getString("pancard"));
-            owner.setApprovalStatus(rs.getString("is_approved"));
+            owner.setApprovalStatus(rs2.getString("is_approved"));
 
             return Optional.of(owner);
 
@@ -130,7 +130,7 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
                 ResultSet rs2 = pstmt2.executeQuery();
                 rs2.next();
                 owner.setPan(rs2.getString("pancard"));
-                owner.setApprovalStatus(rs.getString("is_approved"));
+                owner.setApprovalStatus(rs2.getString("is_approved"));
 
                 list.add(owner);
             }
@@ -141,10 +141,6 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
             return list;
 
 
-//            while (rs.next()) {
-//                System.out.println("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name") + ", Email: " + rs.getString("email"));
-//            }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -154,10 +150,12 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
 
 
 
+
+
     @Override
     public void removeUser(GymOwner user) {
-        String sql = "DELETE FROM users WHERE userID = ?";
-        String sql2 = "DELETE FROM gym_owners WHERE userID = ?";
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        String sql2 = "DELETE FROM gym_owners WHERE user_id = ?";
 
         try(Connection conn = DBConnectionUtil.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -176,4 +174,64 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
             e.printStackTrace();
         }
     }
+
+
+
+    public boolean update(GymOwner user) {
+        String updateUserSQL = "UPDATE users SET name = ?, email = ?, password_hash = ?, phone = ?, address = ?, aadhaar_card = ? WHERE user_id = ?";
+        String updateGymOwnerSQL = "UPDATE gym_owners SET pancard = ?, is_approved = ? WHERE user_id = ?";
+        Connection conn = null;
+        try {
+            conn = DBConnectionUtil.getConnection();
+            // 1. Start transaction
+            conn.setAutoCommit(false);
+
+            // 2. Update users table
+            try (PreparedStatement pstmtUser = conn.prepareStatement(updateUserSQL)) {
+                pstmtUser.setString(1, user.getName());
+                pstmtUser.setString(2, user.getEmail());
+                pstmtUser.setString(3, user.getPasswordHash());
+                pstmtUser.setString(4, user.getPhone());
+                pstmtUser.setString(5, user.getAddress());
+                pstmtUser.setString(6, user.getAdhaar());
+                pstmtUser.setString(7, user.getUserID());
+                pstmtUser.executeUpdate();
+            }
+
+            // 3. Update gym_owners table
+            try (PreparedStatement pstmtOwner = conn.prepareStatement(updateGymOwnerSQL)) {
+                pstmtOwner.setString(1, user.getPan());
+                pstmtOwner.setString(2, user.getApprovalStatus());
+                pstmtOwner.setString(3, user.getUserID());
+                pstmtOwner.executeUpdate();
+            }
+
+            // 4. Commit transaction if both updates succeed
+            conn.commit();
+            System.out.println("DAO: Successfully updated gym owner with ID: " + user.getUserID());
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // 5. Rollback transaction on error
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            // 6. Ensure connection is always closed
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true); // Reset to default
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }
