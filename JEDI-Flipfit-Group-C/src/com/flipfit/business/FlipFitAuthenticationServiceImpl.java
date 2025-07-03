@@ -1,9 +1,10 @@
 package com.flipfit.business;
 
 import com.flipfit.bean.BaseUser;
-import com.flipfit.dao.AdminDAOImpl;
-import com.flipfit.dao.UserDAO;
-import com.flipfit.dao.UserDAOImpl;
+import com.flipfit.bean.Customer;
+import com.flipfit.bean.GymOwner;
+import com.flipfit.bean.SystemAdmin;
+import com.flipfit.dao.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,14 +67,28 @@ public class FlipFitAuthenticationServiceImpl implements FlipFitAuthenticationSe
         return null;
     }
 
+    @Override
+    public void registerCustomer(Customer user) {
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        customerDAO.saveUser(user);
+        System.out.println("User registered: " + user.getName());
+    }
+
+    @Override
+    public void registerGymOwner(GymOwner gymOwner) {
+        GymOwnerDAOImpl gymOwnerDAO = new GymOwnerDAOImpl();
+        gymOwnerDAO.saveUser(gymOwner);
+        System.out.println("User registered: " + gymOwner.getName());
+    }
+
     /**
      * Helper method to add a user to our simulated database.
      * This would be handled by a data access layer in a real app.
      * @param user The user to add.
      */
-    @Override
-    public void registerUser(BaseUser user) {
-        userDAO.saveUser(user);
-        System.out.println("User registered: " + user.getName());
-    }
+//    @Override
+//    public void registerUser(BaseUser user) {
+//        userDAO.saveUser(user);
+//        System.out.println("User registered: " + user.getName());
+//    }
 }

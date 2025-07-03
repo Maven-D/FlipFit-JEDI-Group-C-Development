@@ -6,6 +6,7 @@ import com.flipfit.business.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
+import java.util.UUID;
 
 /**
  * The main entry point for the FlipFit application.
@@ -83,12 +84,12 @@ public class FlipFitApplication {
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
                 Customer customer = new Customer();
-                customer.setUserID(name+email);
+                customer.setUserID(UUID.randomUUID().toString());
                 customer.setName(name);
                 customer.setEmail(email);
                 customer.setPasswordHash(password);
-                customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
-                authBusiness.registerUser(customer);
+                customer.setRole(new UserRole(1, "CUSTOMER", "End User"));
+                authBusiness.registerCustomer(customer);
 
 
 
@@ -101,12 +102,12 @@ public class FlipFitApplication {
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
                 GymOwner owner = new GymOwner();
-                owner.setUserID(name+email);
+                owner.setUserID(UUID.randomUUID().toString());
                 owner.setName(name);
                 owner.setEmail(email);
                 owner.setPasswordHash(password);
                 owner.setRole(new UserRole(2, "GYM_OWNER", "Gym Owner"));
-                authBusiness.registerUser(owner);
+                authBusiness.registerGymOwner(owner);
 
             }
             else {
@@ -119,72 +120,72 @@ public class FlipFitApplication {
     /**
      * Sets up initial dummy data for users, gyms, and time slots.
      */
-    private static void setupInitialData() {
-        // Create users
-        SystemAdmin admin = new SystemAdmin();
-        admin.setUserID("admin01");
-        admin.setName("Main Admin");
-        admin.setEmail("admin@flipfit.com");
-        admin.setPasswordHash("admin123"); // In real app, this would be a hash
-        admin.setRole(new UserRole(1, "ADMIN", "System Administrator"));
-        authBusiness.registerUser(admin);
-
-        GymOwner owner = new GymOwner();
-        owner.setUserID("owner01");
-        owner.setName("John's Gyms");
-        owner.setEmail("owner@flipfit.com");
-        owner.setPasswordHash("owner123");
-        owner.setRole(new UserRole(2, "GYM_OWNER", "Gym Owner"));
-        authBusiness.registerUser(owner);
-
-        Customer customer = new Customer();
-        customer.setUserID("cust01");
-        customer.setName("Alice");
-        customer.setEmail("customer@flipfit.com");
-        customer.setPasswordHash("cust123");
-        customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
-        authBusiness.registerUser(customer);
-
-        // Create a gym managed by the owner
-        Gym gym = new Gym();
-        gym.setGymID("gym01");
-        gym.setName("Flex Fitness");
-        gym.setAddress("123 Muscle St, Workout City");
-        flipFitAdminService.addGym(gym); // Admin approves/adds the gym
-
-        // Create time slots for the gym
-        TimeSlot slot1 = new TimeSlot();
-        slot1.setSlotID("slot01");
-        slot1.setGymID("gym01");
-        slot1.setDate(LocalDate.now());
-        slot1.setStartTime(LocalTime.of(9, 0));
-        slot1.setEndTime(LocalTime.of(10, 0));
-        slot1.setAvailableSeats(10);
-        flipFitGymServiceImpl.addTimeSlot(slot1);
-//        flipFitBookingServiceImpl.addTimeSlot(slot1); // Also add to booking business's list
-
-        TimeSlot slot2 = new TimeSlot();
-        slot2.setSlotID("slot02");
-        slot2.setGymID("gym01");
-        slot2.setDate(LocalDate.now());
-        slot2.setStartTime(LocalTime.of(10, 0));
-        slot2.setEndTime(LocalTime.of(11, 0));
-        slot2.setAvailableSeats(5);
-        flipFitGymServiceImpl.addTimeSlot(slot2);
-//        flipFitBookingServiceImpl.addTimeSlot(slot2);
-
-        // Create time slots for the gym
-        TimeSlot slot3 = new TimeSlot();
-        slot3.setSlotID("slot03");
-        slot3.setGymID("gym02");
-        slot3.setDate(LocalDate.now());
-        slot3.setStartTime(LocalTime.of(9, 30));
-        slot3.setEndTime(LocalTime.of(10, 30));
-        slot3.setAvailableSeats(10);
-        flipFitGymServiceImpl.addTimeSlot(slot3);
-//        flipFitBookingServiceImpl.addTimeSlot(slot3); // Also add to booking business's list
-
-
-        System.out.println("\nInitial data setup complete.\n");
-    }
+//    private static void setupInitialData() {
+//        // Create users
+//        SystemAdmin admin = new SystemAdmin();
+//        admin.setUserID("admin01");
+//        admin.setName("Main Admin");
+//        admin.setEmail("admin@flipfit.com");
+//        admin.setPasswordHash("admin123"); // In real app, this would be a hash
+//        admin.setRole(new UserRole(1, "ADMIN", "System Administrator"));
+//        authBusiness.registerUser(admin);
+//
+//        GymOwner owner = new GymOwner();
+//        owner.setUserID("owner01");
+//        owner.setName("John's Gyms");
+//        owner.setEmail("owner@flipfit.com");
+//        owner.setPasswordHash("owner123");
+//        owner.setRole(new UserRole(2, "GYM_OWNER", "Gym Owner"));
+//        authBusiness.registerUser(owner);
+//
+//        Customer customer = new Customer();
+//        customer.setUserID("cust01");
+//        customer.setName("Alice");
+//        customer.setEmail("customer@flipfit.com");
+//        customer.setPasswordHash("cust123");
+//        customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
+//        authBusiness.registerUser(customer);
+//
+//        // Create a gym managed by the owner
+//        Gym gym = new Gym();
+//        gym.setGymID("gym01");
+//        gym.setName("Flex Fitness");
+//        gym.setAddress("123 Muscle St, Workout City");
+//        flipFitAdminService.addGym(gym); // Admin approves/adds the gym
+//
+//        // Create time slots for the gym
+//        TimeSlot slot1 = new TimeSlot();
+//        slot1.setSlotID("slot01");
+//        slot1.setGymID("gym01");
+//        slot1.setDate(LocalDate.now());
+//        slot1.setStartTime(LocalTime.of(9, 0));
+//        slot1.setEndTime(LocalTime.of(10, 0));
+//        slot1.setAvailableSeats(10);
+//        flipFitGymServiceImpl.addTimeSlot(slot1);
+////        flipFitBookingServiceImpl.addTimeSlot(slot1); // Also add to booking business's list
+//
+//        TimeSlot slot2 = new TimeSlot();
+//        slot2.setSlotID("slot02");
+//        slot2.setGymID("gym01");
+//        slot2.setDate(LocalDate.now());
+//        slot2.setStartTime(LocalTime.of(10, 0));
+//        slot2.setEndTime(LocalTime.of(11, 0));
+//        slot2.setAvailableSeats(5);
+//        flipFitGymServiceImpl.addTimeSlot(slot2);
+////        flipFitBookingServiceImpl.addTimeSlot(slot2);
+//
+//        // Create time slots for the gym
+//        TimeSlot slot3 = new TimeSlot();
+//        slot3.setSlotID("slot03");
+//        slot3.setGymID("gym02");
+//        slot3.setDate(LocalDate.now());
+//        slot3.setStartTime(LocalTime.of(9, 30));
+//        slot3.setEndTime(LocalTime.of(10, 30));
+//        slot3.setAvailableSeats(10);
+//        flipFitGymServiceImpl.addTimeSlot(slot3);
+////        flipFitBookingServiceImpl.addTimeSlot(slot3); // Also add to booking business's list
+//
+//
+//        System.out.println("\nInitial data setup complete.\n");
+//    }
 }

@@ -3,7 +3,7 @@ package com.flipfit.dao;
 import com.flipfit.bean.GymOwner;
 import com.flipfit.bean.UserRole;
 
-import com.flipfit.utils.DBConnectionUtil;
+import com.flipfit.util.DBConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
 
             rs.next();
             GymOwner owner = new GymOwner();
-            owner.setUserID(rs.getString("userID"));
+            owner.setUserID(rs.getString("user_id"));
             owner.setName(rs.getString("name"));
             owner.setEmail(rs.getString("email"));
             owner.setPasswordHash(rs.getString("password_hash"));
@@ -112,7 +112,7 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
 
             while(rs.next()) {
                 GymOwner owner = new GymOwner();
-                owner.setUserID(rs.getString("userID"));
+                owner.setUserID(rs.getString("user_id"));
                 owner.setName(rs.getString("name"));
                 owner.setEmail(rs.getString("email"));
                 owner.setPasswordHash(rs.getString("password_hash"));
@@ -156,6 +156,24 @@ public class GymOwnerDAOImpl implements UserDAO<GymOwner> {
 
     @Override
     public void removeUser(GymOwner user) {
+        String sql = "DELETE FROM users WHERE userID = ?";
+        String sql2 = "DELETE FROM gym_owners WHERE userID = ?";
 
+        try(Connection conn = DBConnectionUtil.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        PreparedStatement pstmt2 = conn.prepareStatement(sql2)) {
+            pstmt.setString(1, user.getUserID());
+            pstmt2.setString(1, user.getUserID());
+
+            int rs = pstmt.executeUpdate();
+            int rs2 = pstmt2.executeUpdate();
+
+            System.out.println(rs+" row(s) in user deleted.");
+            System.out.println(rs2+" row(s) in gym_owner deleted.");
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

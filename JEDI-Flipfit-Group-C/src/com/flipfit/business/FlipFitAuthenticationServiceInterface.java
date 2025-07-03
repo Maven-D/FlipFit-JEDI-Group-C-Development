@@ -1,6 +1,7 @@
 package com.flipfit.business;
 
 import com.flipfit.bean.BaseUser;
+import com.flipfit.bean.Customer;
 import com.flipfit.bean.GymOwner;
 
 public interface FlipFitAuthenticationServiceInterface {
@@ -8,7 +9,7 @@ public interface FlipFitAuthenticationServiceInterface {
 
     BaseUser validateToken(String token);
 
-    void registerCustomer(BaseUser user);
+    void registerCustomer(Customer user);
 
     void registerGymOwner(GymOwner gymOwner);
 }

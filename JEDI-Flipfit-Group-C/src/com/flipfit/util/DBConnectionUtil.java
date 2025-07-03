@@ -1,4 +1,4 @@
-package com.flipfit.utils;
+package com.flipfit.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +14,6 @@ public class DBConnectionUtil {
     private static final String USER = "root";
     private static final String PASSWORD = "mysqlroot";
 
-    private static Connection connection;
 
     /**
      * Establishes and returns a connection to the database.
@@ -22,9 +21,6 @@ public class DBConnectionUtil {
      * @throws SQLException if a database access error occurs.
      */
     public static Connection getConnection() throws SQLException {
-        if(connection != null) {
-            return connection;
-        }
         try {
             // Register the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -33,7 +29,6 @@ public class DBConnectionUtil {
             e.printStackTrace();
             throw new SQLException("JDBC Driver not found", e);
         }
-        connection =  DriverManager.getConnection(URL, USER, PASSWORD);
-        return connection;
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
