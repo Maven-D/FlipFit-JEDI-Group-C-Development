@@ -15,7 +15,7 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
 
 //    private static List<Booking> allBookings = new ArrayList<>();
 //    private static List<TimeSlot> allTimeSlots = new ArrayList<>();
-    List<TimeSlot> allTimeSlots = FlipFitGymServiceInterface.getAllTimeSlots();
+    List<TimeSlot> allTimeSlots = FlipFitGymServiceImpl.getAllTimeSlots();
 
     /**
      * Creates a new booking for a customer for a specific time slot.
@@ -26,7 +26,7 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
      * @return The created Booking object, or null if booking failed.
      */
     @Override
-    public Booking makeBooking(Customer customer, TimeSlot slot) {
+	public Booking makeBooking(Customer customer, TimeSlot slot) {
         if (customer == null || slot == null) {
             System.out.println("Customer or Slot cannot be null.");
             return null;
@@ -114,7 +114,7 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
      * @param slot The TimeSlot to add.
      */
     @Override
-    public void addTimeSlot(TimeSlot slot) {
+	public void addTimeSlot(TimeSlot slot) {
         allTimeSlots.add(slot);
     }
 }

@@ -1,4 +1,3 @@
-// File: com/flipfit/dao/TimeSlotDAOImpl.java
 package com.flipfit.dao;
 
 import com.flipfit.bean.TimeSlot;
