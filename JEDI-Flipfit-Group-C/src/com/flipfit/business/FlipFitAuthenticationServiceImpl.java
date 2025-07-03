@@ -11,6 +11,7 @@ import java.util.List;
  * Service class to handle user authentication logic.
  * This class provides methods to verify user credentials and manage tokens.
  */
+
 public class FlipFitAuthenticationServiceImpl implements FlipFitAuthenticationServiceInterface {
 
     // In-memory list to simulate a database of users.

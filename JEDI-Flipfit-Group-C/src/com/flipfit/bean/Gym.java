@@ -10,6 +10,37 @@ public class Gym {
     private String name;
     private String address;
     private String gymOwnerID;
+    private String approvalStatus;
+    private String gstNumber;
+
+
+    /**
+	 * @return the gstNumber
+	 */
+	public String getGstNumber() {
+		return gstNumber;
+	}
+
+	/**
+	 * @param gstNumber the gstNumber to set
+	 */
+	public void setGstNumber(String gstNumber) {
+		this.gstNumber = gstNumber;
+	}
+
+	/**
+	 * @return the approvalStatus
+	 */
+	public String getApprovalStatus() {
+		return approvalStatus;
+	}
+
+	/**
+	 * @param approvalStatus the approvalStatus to set
+	 */
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
+	}
 
     public String getGymOwnerID() {
         return gymOwnerID;
