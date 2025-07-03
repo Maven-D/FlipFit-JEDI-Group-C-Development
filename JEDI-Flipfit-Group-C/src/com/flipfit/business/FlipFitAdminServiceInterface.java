@@ -4,6 +4,7 @@ import com.flipfit.bean.Customer;
 import com.flipfit.bean.Gym;
 
 public interface FlipFitAdminServiceInterface {
+<<<<<<< HEAD
 
 	/**
 	 * Adds a new customer to the system.
@@ -32,3 +33,13 @@ public interface FlipFitAdminServiceInterface {
 	boolean removeGym(Gym gym);
 
 }
+=======
+    void addCustomer(Customer customer);
+
+    boolean removeCustomer(Customer customer);
+
+    void addGym(Gym gym);
+
+    boolean removeGym(Gym gym);
+}
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0

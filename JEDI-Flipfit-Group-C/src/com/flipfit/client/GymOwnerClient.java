@@ -3,9 +3,13 @@ package com.flipfit.client;
 import com.flipfit.bean.GymOwner;
 import com.flipfit.bean.TimeSlot;
 import com.flipfit.business.FlipFitBookingServiceImpl;
+<<<<<<< HEAD
 import com.flipfit.business.FlipFitBookingServiceInterface;
 import com.flipfit.business.FlipFitGymServiceImpl;
 import com.flipfit.business.FlipFitGymServiceInterface;
+=======
+import com.flipfit.business.FlipFitGymServiceImpl;
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,8 +23,13 @@ import java.util.UUID;
  */
 public class GymOwnerClient {
 
+<<<<<<< HEAD
     private FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
     private FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl(); // To add slots to booking business
+=======
+    private FlipFitGymServiceImpl flipFitGymServiceImpl = new FlipFitGymServiceImpl();
+    private FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl(); // To add slots to booking business
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
 
     /**
      * Displays the main menu for the Gym Owner and handles input.
@@ -73,8 +82,8 @@ public class GymOwnerClient {
         newSlot.setEndTime(endTime);
         newSlot.setAvailableSeats(seats);
 
-        flipFitGymService.addTimeSlot(newSlot);
-        flipFitBookingService.addTimeSlot(newSlot); // Ensure booking business is aware of the new slot
+        flipFitGymServiceImpl.addTimeSlot(newSlot);
+        flipFitBookingServiceImpl.addTimeSlot(newSlot); // Ensure booking business is aware of the new slot
         System.out.println("Time slot added successfully!");
     }
 }

@@ -1,5 +1,6 @@
 package com.flipfit.business;
 
+<<<<<<< HEAD
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,3 +24,24 @@ public interface FlipFitGymServiceInterface {
 	void addTimeSlot(TimeSlot slot);
 
 }
+=======
+import com.flipfit.bean.TimeSlot;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public interface FlipFitGymServiceInterface {
+    /**
+     * Public static method to allow other classes to access the master list.
+     *
+     * @return The list of all time slots.
+     */
+    static List<TimeSlot> getAllTimeSlots() {
+        return FlipFitGymServiceImpl.getAllTimeSlots();
+    }
+
+    List<TimeSlot> getAvailability(String gymId, LocalDate date);
+
+    void addTimeSlot(TimeSlot slot);
+}
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0

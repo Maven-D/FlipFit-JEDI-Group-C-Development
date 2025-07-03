@@ -21,7 +21,11 @@ public class FlipFitGymOwnerServiceImpl implements FlipFitGymOwnerServiceInterfa
      * @return A list of Booking objects for that gym.
      */
     @Override
+<<<<<<< HEAD
 	public List<Booking> viewGymBookings(String gymId) {
+=======
+    public List<Booking> viewGymBookings(String gymId) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         System.out.println("Gym Owner fetching bookings for gym ID: " + gymId);
         // This requires linking a booking to a gym.
         // We'd need to add gymId to the Booking bean or cross-reference through TimeSlot.
@@ -35,7 +39,11 @@ public class FlipFitGymOwnerServiceImpl implements FlipFitGymOwnerServiceInterfa
      * @param details The Gym object with updated information.
      */
     @Override
+<<<<<<< HEAD
 	public void manageGymDetails(Gym details) {
+=======
+    public void manageGymDetails(Gym details) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         for (int i = 0; i < allGyms.size(); i++) {
             if (allGyms.get(i).getGymID().equals(details.getGymID())) {
                 allGyms.set(i, details); // Replace the old gym object with the new one.

@@ -11,7 +11,45 @@ public class Booking {
     private String bookingID;
     private LocalDateTime bookingTime;
     private String status; // e.g., "Confirmed", "Cancelled"
-    private TimeSlot slot;
+    private TimeSlot slot; // TODO: remove this and do it by slotID
+    private String userID;
+    private String paymentID;
+    private String gymID;
+    private String slotID;
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
+    }
+
+    public String getSlotID() {
+        return slotID;
+    }
+
+    public void setSlotID(String slotID) {
+        this.slotID = slotID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getGymID() {
+        return gymID;
+    }
+
+    public void setGymID(String gymID) {
+        this.gymID = gymID;
+    }
+
+
 
     public TimeSlot getSlot() {
         return slot;

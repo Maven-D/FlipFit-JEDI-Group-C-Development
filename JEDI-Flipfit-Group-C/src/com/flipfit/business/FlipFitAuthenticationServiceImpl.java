@@ -9,7 +9,11 @@ import java.util.List;
  * Service class to handle user authentication logic.
  * This class provides methods to verify user credentials and manage tokens.
  */
+<<<<<<< HEAD
 public class FlipFitAuthenticationServiceImpl implements FlipfitAuthenticationServiceInterface {
+=======
+public class FlipFitAuthenticationServiceImpl implements FlipFitAuthenticationServiceInterface {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
 
     // In-memory list to simulate a database of users.
     private static List<BaseUser> users = new ArrayList<>();
@@ -24,7 +28,11 @@ public class FlipFitAuthenticationServiceImpl implements FlipfitAuthenticationSe
      * @return The BaseUser object if credentials are valid, otherwise null.
      */
     @Override
+<<<<<<< HEAD
 	public BaseUser verifyCredentials(String email, String password) {
+=======
+    public BaseUser verifyCredentials(String email, String password) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         System.out.println("Attempting to verify credentials for email: " + email);
         for (BaseUser user : users) {
             // In a real app, compare password with a hashed version.
@@ -47,7 +55,11 @@ public class FlipFitAuthenticationServiceImpl implements FlipfitAuthenticationSe
      * @return The BaseUser associated with the token if valid, otherwise null.
      */
     @Override
+<<<<<<< HEAD
 	public BaseUser validateToken(String token) {
+=======
+    public BaseUser validateToken(String token) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         // In a real application, you would decode a JWT or look up a session token.
         // For this example, we'll assume the token is the user's ID.
         System.out.println("Validating token: " + token);
@@ -67,7 +79,11 @@ public class FlipFitAuthenticationServiceImpl implements FlipfitAuthenticationSe
      * @param user The user to add.
      */
     @Override
+<<<<<<< HEAD
 	public void registerUser(BaseUser user) {
+=======
+    public void registerUser(BaseUser user) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         users.add(user);
         System.out.println("User registered: " + user.getName());
     }

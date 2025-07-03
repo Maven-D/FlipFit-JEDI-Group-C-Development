@@ -16,6 +16,19 @@ public class TimeSlot {
     private LocalDate date;
     private int availableSeats;
 
+    public TimeSlot(){
+
+    }
+
+    public TimeSlot(String slotID, String gymID, LocalTime startTime, LocalTime endTime, LocalDate date, int availableSeats) {
+        this.slotID = slotID;
+        this.gymID = gymID;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.availableSeats = availableSeats;
+    }
+
     // Getters and Setters
 
     /**

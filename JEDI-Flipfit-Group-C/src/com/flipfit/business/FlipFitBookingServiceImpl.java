@@ -5,7 +5,6 @@ import com.flipfit.bean.Customer;
 import com.flipfit.bean.TimeSlot;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +15,11 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
 
 //    private static List<Booking> allBookings = new ArrayList<>();
 //    private static List<TimeSlot> allTimeSlots = new ArrayList<>();
+<<<<<<< HEAD
     List<TimeSlot> allTimeSlots = FlipFitGymServiceImpl.getAllTimeSlots();
+=======
+    List<TimeSlot> allTimeSlots = FlipFitGymServiceInterface.getAllTimeSlots();
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
 
     /**
      * Creates a new booking for a customer for a specific time slot.
@@ -27,7 +30,11 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
      * @return The created Booking object, or null if booking failed.
      */
     @Override
+<<<<<<< HEAD
 	public Booking makeBooking(Customer customer, TimeSlot slot) {
+=======
+    public Booking makeBooking(Customer customer, TimeSlot slot) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         if (customer == null || slot == null) {
             System.out.println("Customer or Slot cannot be null.");
             return null;
@@ -115,7 +122,11 @@ public class FlipFitBookingServiceImpl implements FlipFitBookingServiceInterface
      * @param slot The TimeSlot to add.
      */
     @Override
+<<<<<<< HEAD
 	public void addTimeSlot(TimeSlot slot) {
+=======
+    public void addTimeSlot(TimeSlot slot) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         allTimeSlots.add(slot);
     }
 }

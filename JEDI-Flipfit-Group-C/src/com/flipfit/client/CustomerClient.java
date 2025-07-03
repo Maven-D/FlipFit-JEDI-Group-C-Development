@@ -4,11 +4,16 @@ import com.flipfit.bean.Booking;
 import com.flipfit.bean.Customer;
 import com.flipfit.bean.TimeSlot;
 import com.flipfit.business.FlipFitBookingServiceImpl;
+<<<<<<< HEAD
 import com.flipfit.business.FlipFitBookingServiceInterface;
 import com.flipfit.business.FlipFitCustomerServiceImpl;
 import com.flipfit.business.FlipFitCustomerServiceInterface;
 import com.flipfit.business.FlipFitGymServiceImpl;
 import com.flipfit.business.FlipFitGymServiceInterface;
+=======
+import com.flipfit.business.FlipFitCustomerServiceImpl;
+import com.flipfit.business.FlipFitGymServiceImpl;
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,14 +22,20 @@ import java.util.Scanner;
 
 public class CustomerClient {
 
+<<<<<<< HEAD
     private FlipFitGymServiceInterface flipFitGymService = new FlipFitGymServiceImpl();
     private FlipFitBookingServiceInterface flipFitBookingService = new FlipFitBookingServiceImpl();
     private FlipFitCustomerServiceInterface flipFitCustomerService = new FlipFitCustomerServiceImpl();
+=======
+    private FlipFitGymServiceImpl flipFitGymServiceImpl = new FlipFitGymServiceImpl();
+    private FlipFitBookingServiceImpl flipFitBookingServiceImpl = new FlipFitBookingServiceImpl();
+    private FlipFitCustomerServiceImpl flipFitCustomerServiceImpl = new FlipFitCustomerServiceImpl();
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
 
 
     public void showCustomerMenu(Scanner scanner, Customer customer) {
 
-        flipFitCustomerService.setCustomer(customer);
+        flipFitCustomerServiceImpl.setCustomer(customer);
         while (true) {
             System.out.println("\n--- Customer Menu ---");
             System.out.println("Logged in as: " + customer.getName());
@@ -69,7 +80,7 @@ public class CustomerClient {
         LocalDate date = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
         scanner.close();
 
-        List<TimeSlot> slots = flipFitGymService.getAvailability(gymId, date);
+        List<TimeSlot> slots = flipFitGymServiceImpl.getAvailability(gymId, date);
         if (slots.isEmpty()) {
             System.out.println("No available slots for this gym on the selected date.");
         } else {
@@ -95,7 +106,7 @@ public class CustomerClient {
         TimeSlot slotToBook = new TimeSlot();
         slotToBook.setSlotID(slotId);
 
-        Booking booking = flipFitBookingService.makeBooking(customer, slotToBook);
+        Booking booking = flipFitBookingServiceImpl.makeBooking(customer, slotToBook);
         if (booking != null) {
             System.out.println("Booking successful! Your Booking ID is: " + booking.getBookingID());
         } else {
@@ -105,7 +116,7 @@ public class CustomerClient {
 
     private void viewMyBookings(Customer customer) {
         System.out.println("\n-- My Bookings --");
-        List<Booking> bookings = flipFitCustomerService.viewBookings();
+        List<Booking> bookings = flipFitCustomerServiceImpl.viewBookings();
         if (bookings.isEmpty()) {
             System.out.println("You have no bookings.");
         } else {
@@ -124,6 +135,6 @@ public class CustomerClient {
     	 System.out.print("Enter Booking ID: ");
     	 String bookingId = scanner.nextLine();
     	 System.out.println("Cancelling Booking with ID "+ bookingId);
-    	 flipFitCustomerService.cancelBooking(bookingId);
+    	 flipFitCustomerServiceImpl.cancelBooking(bookingId);
     }
 }

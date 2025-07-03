@@ -13,7 +13,11 @@ public class FlipFitCustomerServiceImpl implements FlipFitCustomerServiceInterfa
 
     private Customer customer;
     @Override
+<<<<<<< HEAD
 	public void setCustomer(Customer customer) {this.customer = customer;}
+=======
+    public void setCustomer(Customer customer) {this.customer = customer;}
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
 
     /**
      * Retrieves all bookings made by a specific customer.
@@ -21,7 +25,11 @@ public class FlipFitCustomerServiceImpl implements FlipFitCustomerServiceInterfa
      * @return A list of Booking objects.
      */
     @Override
+<<<<<<< HEAD
 	public List<Booking> viewBookings() {
+=======
+    public List<Booking> viewBookings() {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         System.out.println("Fetching bookings for customer ID: " + customer.getUserID());
         // In a real app, this would query the database.
         // For now, we filter the master list of bookings.
@@ -30,7 +38,11 @@ public class FlipFitCustomerServiceImpl implements FlipFitCustomerServiceInterfa
     }
     
     @Override
+<<<<<<< HEAD
 	public void addBooking(Booking booking) {
+=======
+    public void addBooking(Booking booking) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
     	customer.getBookingList().add(booking);
 
 
@@ -43,7 +55,11 @@ public class FlipFitCustomerServiceImpl implements FlipFitCustomerServiceInterfa
      * @return true if the booking was successfully cancelled, false otherwise.
      */
     @Override
+<<<<<<< HEAD
 	public boolean cancelBooking(String bookingId) {
+=======
+    public boolean cancelBooking(String bookingId) {
+>>>>>>> 4678108a044592849fba849c12eb21ae5b8698e0
         // 1. Add a validation check for the input bookingId.
         if (bookingId == null || bookingId.trim().isEmpty()) {
             System.out.println("Booking ID cannot be null or empty.");
