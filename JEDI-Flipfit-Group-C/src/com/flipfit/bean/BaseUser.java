@@ -13,6 +13,35 @@ public abstract class BaseUser {
     private String email;
     private String passwordHash;
     private UserRole role;
+    private String phone;
+
+    public String getAdhaar() {
+        return adhaar;
+    }
+
+    public void setAdhaar(String adhaar) {
+        this.adhaar = adhaar;
+    }
+
+    private String adhaar;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    private String address;
 
     public UserRole getRole() {
         return role;

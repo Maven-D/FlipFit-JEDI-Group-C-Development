@@ -8,6 +8,15 @@ package com.flipfit.bean;
 public class GymOwner extends BaseUser {
 
 	String approvalStatus;
+	String pan;
+
+	public String getPan() {
+		return pan;
+	}
+
+	public void setPan(String pan) {
+		this.pan = pan;
+	}
 
 	/**
 	 * @return the approvalStatus

@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
  * Implementation of the UserDAO interface.
  * Simulates a database with hardcoded initial data.
  */
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl {
 
-    private static final List<BaseUser> userTable = new ArrayList<>();
+    private static final List userTable = new ArrayList<>();
 
     static {
         // Roles
@@ -51,44 +51,52 @@ public class UserDAOImpl implements UserDAO {
         userTable.add(customer);
     }
 
-    @Override
-    public void saveUser(BaseUser user) {
-        System.out.println("DAO: Saving user " + user.getName());
-        userTable.add(user);
-    }
+//    @Override
+//    public void saveUser(T user) {
+//        System.out.println("DAO: Saving user " + user.getName());
+//
+//        userTable.add(user);
+//    }
 
-    @Override
-    public Optional<BaseUser> findByEmail(String email) {
-        System.out.println("DAO: Searching for user with email: " + email);
-        return userTable.stream()
-                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .findFirst();
-    }
 
-    @Override
-    public Optional<BaseUser> findById(String userId) {
-        System.out.println("DAO: Searching for user with ID: " + userId);
-        return userTable.stream()
-                .filter(u -> u.getUserID().equals(userId))
-                .findFirst();
-    }
 
-    @Override
-    public List<BaseUser> getAll() {
-        System.out.println("DAO: Fetching all users.");
-        return new ArrayList<>(userTable);
-    }
+//    @Override
+//    public Optional<T> findByEmail(String email) {
+//        System.out.println("DAO: Searching for user with email: " + email);
+//        return userTable.stream()
+//                .filter(u -> u.getEmail().equalsIgnoreCase(email))
+//                .findFirst();
+//    }
 
-    @Override
-    public List<BaseUser> getByRole(UserRole role) {
-        System.out.println("DAO: Fetching all users with role: " + role.getRoleName());
-        return userTable.stream()
-                .filter(u -> u.getRole().getRoleId() == role.getRoleId())
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public Optional<T> findById(String userId) {
+//        System.out.println("DAO: Searching for user with ID: " + userId);
+//        return userTable.stream()
+//                .filter(u -> u.getUserID().equals(userId))
+//                .findFirst();
+//    }
 
-    @Override
-    public void removeUser(BaseUser user) {
-        userTable.removeIf(u -> u.getUserID().equals(user.getUserID()));
-    }
+//    @Override
+//    public List<T> getAll() {
+//        System.out.println("DAO: Fetching all users.");
+//        return new ArrayList<>(userTable);
+//    }
+
+//    @Override
+//    public List<T> getByRole(UserRole role) {
+//        System.out.println("DAO: Fetching all users with role: " + role.getRoleName());
+//        return userTable.stream()
+//                .filter(u -> u.getRole().getRoleId() == role.getRoleId())
+//                .collect(Collectors.toList());
+//    }
+
+//    @Override
+//    public void removeUser(BaseUser user) {
+//
+//    }
+
+//    @Override
+//    public void removeUser(T user) {
+//        userTable.removeIf(u -> u.getUserID().equals(user.getUserID()));
+//    }
 }
