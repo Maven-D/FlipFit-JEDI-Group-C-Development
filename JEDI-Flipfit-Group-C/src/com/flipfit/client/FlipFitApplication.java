@@ -6,6 +6,7 @@ import com.flipfit.business.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /**
  * The main entry point for the FlipFit application.
@@ -44,8 +45,16 @@ public class FlipFitApplication {
             System.out.println("4. Exit");
             System.out.print("Choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice = -1; // Initialize with a default invalid value
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                continue; // Skip the rest of the loop and show the menu again
+            } finally {
+                scanner.nextLine(); // Consume the newline character after a valid number is entered
+            }
 
             if(choice == 4) {
                 System.out.println("Thank you for using FlipFit. Goodbye!");
@@ -115,76 +124,4 @@ public class FlipFitApplication {
         }
         scanner.close();
     }
-
-    /**
-     * Sets up initial dummy data for users, gyms, and time slots.
-     */
-//    private static void setupInitialData() {
-//        // Create users
-////        SystemAdmin admin = new SystemAdmin();
-////        admin.setUserID("admin01");
-////        admin.setName("Main Admin");
-////        admin.setEmail("admin@flipfit.com");
-////        admin.setPasswordHash("admin123"); // In real app, this would be a hash
-////        admin.setRole(new UserRole(1, "ADMIN", "System Administrator"));
-////        authBusiness.registerUser(admin);
-//
-//        GymOwner owner = new GymOwner();
-//        owner.setUserID("owner01");
-//        owner.setName("John's Gyms");
-//        owner.setEmail("owner@flipfit.com");
-//        owner.setPasswordHash("owner123");
-//        owner.setRole(new UserRole(2, "GYM_OWNER", "Gym Owner"));
-//        authBusiness.registerGymOwner(owner);
-//
-//        Customer customer = new Customer();
-//        customer.setUserID("cust01");
-//        customer.setName("Alice");
-//        customer.setEmail("customer@flipfit.com");
-//        customer.setPasswordHash("cust123");
-//        customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
-//        authBusiness.registerCustomer(customer);
-//
-//        // Create a gym managed by the owner
-//        Gym gym = new Gym();
-//        gym.setGymID("gym01");
-//        gym.setName("Flex Fitness");
-//        gym.setAddress("123 Muscle St, Workout City");
-//        flipFitAdminService.addGym(gym); // Admin approves/adds the gym
-//
-//        // Create time slots for the gym
-//        TimeSlot slot1 = new TimeSlot();
-//        slot1.setSlotID("slot01");
-//        slot1.setGymID("gym01");
-//        slot1.setDate(LocalDate.now());
-//        slot1.setStartTime(LocalTime.of(9, 0));
-//        slot1.setEndTime(LocalTime.of(10, 0));
-//        slot1.setAvailableSeats(10);
-//        flipFitGymServiceImpl.addTimeSlot(slot1);
-////        flipFitBookingServiceImpl.addTimeSlot(slot1); // Also add to booking business's list
-//
-//        TimeSlot slot2 = new TimeSlot();
-//        slot2.setSlotID("slot02");
-//        slot2.setGymID("gym01");
-//        slot2.setDate(LocalDate.now());
-//        slot2.setStartTime(LocalTime.of(10, 0));
-//        slot2.setEndTime(LocalTime.of(11, 0));
-//        slot2.setAvailableSeats(5);
-//        flipFitGymServiceImpl.addTimeSlot(slot2);
-////        flipFitBookingServiceImpl.addTimeSlot(slot2);
-//
-//        // Create time slots for the gym
-//        TimeSlot slot3 = new TimeSlot();
-//        slot3.setSlotID("slot03");
-//        slot3.setGymID("gym02");
-//        slot3.setDate(LocalDate.now());
-//        slot3.setStartTime(LocalTime.of(9, 30));
-//        slot3.setEndTime(LocalTime.of(10, 30));
-//        slot3.setAvailableSeats(10);
-//        flipFitGymServiceImpl.addTimeSlot(slot3);
-////        flipFitBookingServiceImpl.addTimeSlot(slot3); // Also add to booking business's list
-//
-//
-//        System.out.println("\nInitial data setup complete.\n");
-//    }
 }
