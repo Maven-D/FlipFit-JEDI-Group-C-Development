@@ -166,10 +166,11 @@ public class AdminDAOImpl implements UserDAO<SystemAdmin> {
                 var role = new UserRole();
                 role.setRoleId(rs.getInt("role_id"));
 
-                if(role.getRoleId() == 1) {
-                    role.setRoleName("Customer");
-                    role.setDescription("GYM CUSTOMER");
-                    user = new Customer();
+                if(role.getRoleId() == 3) {
+                    role.setRoleName("SystemAdmin");
+                    role.setDescription("SYSTEM ADMIN");
+                    user = new SystemAdmin();
+
                 }
                 else if (role.getRoleId() == 2) {
                     role.setRoleName("Gym Owner");
@@ -177,9 +178,9 @@ public class AdminDAOImpl implements UserDAO<SystemAdmin> {
                     user = new GymOwner();
                 }
                 else {
-                    role.setRoleName("Admin");
-                    role.setDescription("SYSTEM ADMIN");
-                    user = new SystemAdmin();
+                    role.setRoleName("Customer");
+                    role.setDescription("GYM CUSTOMER");
+                    user = new Customer();
                 }
 
                 user.setUserID(rs.getString("user_id"));

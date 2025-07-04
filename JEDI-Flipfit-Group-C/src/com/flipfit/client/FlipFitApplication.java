@@ -96,7 +96,7 @@ public class FlipFitApplication {
                 customer.setName(name);
                 customer.setEmail(email);
                 customer.setPasswordHash(password);
-                customer.setRole(new UserRole(3, "CUSTOMER", "End User"));
+                customer.setRole(new UserRole(1, "CUSTOMER", "End User"));
                 authBusiness.registerCustomer(customer);
 
 
