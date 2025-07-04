@@ -11,7 +11,7 @@ public class Booking {
     private String bookingID;
     private LocalDateTime bookingTime;
     private String status; // e.g., "Confirmed", "Cancelled"
-    private TimeSlot slot; // TODO: remove this and do it by slotID
+//    private TimeSlot slot; // TODO: remove this and do it by slotID
     private String userID;
     private String paymentID;
     private String gymID;
@@ -51,13 +51,13 @@ public class Booking {
 
 
 
-    public TimeSlot getSlot() {
-        return slot;
-    }
-
-    public void setSlot(TimeSlot slot) {
-        this.slot = slot;
-    }
+//    public TimeSlot getSlot() {
+//        return slot;
+//    }
+//
+//    public void setSlot(TimeSlot slot) {
+//        this.slot = slot;
+//    }
 // Getters and Setters
 
     /**

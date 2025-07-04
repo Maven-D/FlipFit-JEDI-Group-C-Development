@@ -1,6 +1,9 @@
 package com.flipfit.business;
 
+import com.flipfit.bean.Gym;
 import com.flipfit.bean.TimeSlot;
+import com.flipfit.dao.GymDAO;
+import com.flipfit.dao.GymDAOImpl;
 import com.flipfit.dao.TimeSlotDAO;
 import com.flipfit.dao.TimeSlotDAOImpl;
 
@@ -18,7 +21,14 @@ public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
     // This is the single source of truth for all time slots.
 //    private static final List<TimeSlot> allTimeSlots = new TimeSlotDAOImpl().getAll();
     private TimeSlotDAO timeSlotDAO = new TimeSlotDAOImpl();
+    private GymDAOImpl gymDAO = new GymDAOImpl();
 
+    @Override
+    public List<Gym> getAllGyms(){
+        return gymDAO.getAll();
+    }
+
+    @Override
     public List<TimeSlot> getAllTimeSlots() {
         return timeSlotDAO.getAll();
     }
@@ -32,7 +42,7 @@ public class FlipFitGymServiceImpl implements FlipFitGymServiceInterface {
      */
     @Override
     public List<TimeSlot> getAvailability(String gymId, LocalDate date) {
-//        System.out.println("Fetching availability for gym ID: " + gymId + " on date: " + date);
+        System.out.println("Fetching availability for gym ID: " + gymId + " on date: " + date);
 //        return allTimeSlots.stream()
 //                .filter(slot -> slot.getGymID().equals(gymId) && slot.getDate().isEqual(date) && slot.getAvailableSeats() > 0)
 //                .collect(Collectors.toList());

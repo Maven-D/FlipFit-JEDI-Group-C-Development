@@ -6,6 +6,7 @@ import com.flipfit.bean.SystemAdmin;
 import com.flipfit.business.FlipFitAdminServiceImpl;
 import com.flipfit.business.FlipFitAdminServiceInterface;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
@@ -36,8 +37,16 @@ public class FlipFitAdminMenu {
             System.out.println("5. Logout");
             System.out.print("Choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice = -1; // Initialize with a default invalid value
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                continue; // Skip the rest of the loop and show the menu again
+            } finally {
+                scanner.nextLine(); // Consume the newline character after a valid number is entered
+            }
 
             switch (choice) {
                 case 1:

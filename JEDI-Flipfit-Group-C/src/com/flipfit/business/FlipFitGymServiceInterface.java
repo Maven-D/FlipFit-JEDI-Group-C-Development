@@ -3,6 +3,7 @@ package com.flipfit.business;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.flipfit.bean.Gym;
 import com.flipfit.bean.TimeSlot;
 
 public interface FlipFitGymServiceInterface {
@@ -21,5 +22,11 @@ public interface FlipFitGymServiceInterface {
 	 * @param slot The TimeSlot to add.
 	 */
 	void addTimeSlot(TimeSlot slot);
+
+	public List<TimeSlot> getAllTimeSlots();
+
+	public List<Gym> getAllGyms();
+
+
 
 }
