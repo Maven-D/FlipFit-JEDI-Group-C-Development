@@ -1,6 +1,14 @@
 package com.flipfit.dao;
 
-import com.flipfit.bean.*;
+import com.flipfit.bean.BaseUser;
+import com.flipfit.bean.Customer;
+import com.flipfit.bean.GymOwner;
+import com.flipfit.bean.SystemAdmin;
+import com.flipfit.bean.UserRole;
+import com.flipfit.exception.DataAccessException;
+import com.flipfit.exception.DuplicateUserException;
+import com.flipfit.exception.UserNotFoundException;
+import com.flipfit.util.DBConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +23,7 @@ public class AdminDAOImpl implements UserDAO<SystemAdmin> {
     public void saveUser(SystemAdmin user) {
         String sql1 = "INSERT INTO users VALUES (?,?,?,?,?,?,?,?)";
         String sql2 = "INSERT INTO system_admins VALUES (?)";
-        try (Connection conn = com.flipfit.util.DBConnectionUtil.getConnection();
+        try (Connection conn = DBConnectionUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql1);
              PreparedStatement pstmt2 = conn.prepareStatement(sql2)) {
 
@@ -27,70 +35,50 @@ public class AdminDAOImpl implements UserDAO<SystemAdmin> {
             pstmt.setString(6, user.getPhone());
             pstmt.setString(7, user.getAddress());
             pstmt.setString(8, user.getAdhaar());
-
             pstmt2.setString(1, user.getUserID());
 
-
-            int rowsAffected = pstmt.executeUpdate();
-            System.out.println(rowsAffected + " row(s) inserted.");
+            pstmt.executeUpdate();
+            pstmt2.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            // Assuming 23505 is the SQL state for unique violation in your database (e.g., PostgreSQL)
+            if ("23505".equals(e.getSQLState())) {
+                throw new DuplicateUserException("Admin with ID " + user.getUserID() + " or email " + user.getEmail() + " already exists.");
+            }
+            throw new DataAccessException("Error saving admin user: " + e.getMessage(), e);
         }
     }
 
     @Override
     public Optional<SystemAdmin> findByEmail(String email) {
+        // Implementation would be similar to findById, but querying by email
         return Optional.empty();
     }
 
     @Override
     public Optional<SystemAdmin> findById(String userId) {
-        String sql = "SELECT * FROM users WHERE userID = ?";
-//        String sql2 = "SELECT * FROM gym_owners WHERE userID = ?";
-
-        try (Connection conn = com.flipfit.util.DBConnectionUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)
-//             PreparedStatement pstmt2 = conn.prepareStatement(sql2)
-        ) {
+        String sql = "SELECT * FROM users WHERE user_id = ? AND role_id = 3";
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userId);
-//            pstmt2.setString(1, userId);
-
             ResultSet rs = pstmt.executeQuery();
-//            ResultSet rs2 = pstmt2.executeQuery();
 
-            rs.next();
-            SystemAdmin owner = new SystemAdmin();
-            owner.setUserID(rs.getString("user_id"));
-            owner.setName(rs.getString("name"));
-            owner.setEmail(rs.getString("email"));
-            owner.setPasswordHash(rs.getString("password_hash"));
-            var role = new UserRole();
-            role.setRoleId(rs.getInt("role_id"));
-            role.setRoleName("Admin");
-            role.setDescription("SYSTEM ADMIN");
-            owner.setRole(role);
-            owner.setPhone(rs.getString("phone"));
-            owner.setAdhaar(rs.getString("aadhaar_card"));
-            owner.setAddress(rs.getString("address"));
-
-//            rs2.next();
-//            owner.setPan(rs2.getString("pancard"));
-//            owner.setApprovalStatus(rs.getString("is_approved"));
-
-            return Optional.of(owner);
-
-
-
-
-//            while (rs.next()) {
-//                System.out.println("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name") + ", Email: " + rs.getString("email"));
-//            }
-
+            if (rs.next()) {
+                SystemAdmin admin = new SystemAdmin();
+                admin.setUserID(rs.getString("user_id"));
+                admin.setName(rs.getString("name"));
+                admin.setEmail(rs.getString("email"));
+                admin.setPasswordHash(rs.getString("password_hash"));
+                UserRole role = new UserRole(rs.getInt("role_id"), "Admin", "SYSTEM ADMIN");
+                admin.setRole(role);
+                admin.setPhone(rs.getString("phone"));
+                admin.setAdhaar(rs.getString("aadhaar_card"));
+                admin.setAddress(rs.getString("address"));
+                return Optional.of(admin);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Error finding admin by ID: " + e.getMessage(), e);
         }
-
         return Optional.empty();
     }
 
@@ -98,86 +86,51 @@ public class AdminDAOImpl implements UserDAO<SystemAdmin> {
     public List<SystemAdmin> getAll() {
         String sql = "SELECT * FROM users WHERE role_id = 3";
         List<SystemAdmin> list = new ArrayList<>();
-//        String sql2 = "SELECT * FROM gym_owners";
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
-        try (Connection conn = com.flipfit.util.DBConnectionUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)
-//             PreparedStatement pstmt2 = conn.prepareStatement(sql2)
-        ) {
-//            pstmt.setString(1, userId);
-//            pstmt2.setString(1, userId);
-
-            ResultSet rs = pstmt.executeQuery();
-//            ResultSet rs2 = pstmt2.executeQuery();
-
-            while(rs.next()) {
-                SystemAdmin owner = new SystemAdmin();
-                owner.setUserID(rs.getString("user_id"));
-                owner.setName(rs.getString("name"));
-                owner.setEmail(rs.getString("email"));
-                owner.setPasswordHash(rs.getString("password_hash"));
-                var role = new UserRole();
-                role.setRoleId(rs.getInt("role_id"));
-                role.setRoleName("Admin");
-                role.setDescription("SYSTEM ADMIN");
-                owner.setRole(role);
-                owner.setPhone(rs.getString("phone"));
-                owner.setAdhaar(rs.getString("aadhaar_card"));
-                owner.setAddress(rs.getString("address"));
-
-                list.add(owner);
+            while (rs.next()) {
+                SystemAdmin admin = new SystemAdmin();
+                admin.setUserID(rs.getString("user_id"));
+                admin.setName(rs.getString("name"));
+                admin.setEmail(rs.getString("email"));
+                admin.setPasswordHash(rs.getString("password_hash"));
+                UserRole role = new UserRole(rs.getInt("role_id"), "Admin", "SYSTEM ADMIN");
+                admin.setRole(role);
+                admin.setPhone(rs.getString("phone"));
+                admin.setAdhaar(rs.getString("aadhaar_card"));
+                admin.setAddress(rs.getString("address"));
+                list.add(admin);
             }
-
-
-//            rs2.next();
-//            owner.setPan(rs2.getString("pancard"));
-//            owner.setApprovalStatus(rs.getString("is_approved"));
-
-            return list;
-
-
-
-
-//            while (rs.next()) {
-//                System.out.println("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name") + ", Email: " + rs.getString("email"));
-//            }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Error retrieving all admins: " + e.getMessage(), e);
         }
-
         return list;
     }
 
     public List<BaseUser> getAllUsers() {
         String sql = "SELECT * FROM users";
-
         List<BaseUser> list = new ArrayList<>();
-
-        try (Connection conn = com.flipfit.util.DBConnectionUtil.getConnection();
+        try (Connection conn = DBConnectionUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery();
-        ) {
+             ResultSet rs = pstmt.executeQuery()) {
 
+            while (rs.next()) {
+                BaseUser user;
+                UserRole role = new UserRole();
+                int roleId = rs.getInt("role_id");
+                role.setRoleId(roleId);
 
-
-            while(rs.next()) {
-                BaseUser user = null;
-                var role = new UserRole();
-                role.setRoleId(rs.getInt("role_id"));
-
-                if(role.getRoleId() == 3) {
+                if (roleId == 3) {
                     role.setRoleName("SystemAdmin");
                     role.setDescription("SYSTEM ADMIN");
                     user = new SystemAdmin();
-
-                }
-                else if (role.getRoleId() == 2) {
+                } else if (roleId == 2) {
                     role.setRoleName("Gym Owner");
                     role.setDescription("GYM OWNER");
                     user = new GymOwner();
-                }
-                else {
+                } else {
                     role.setRoleName("Customer");
                     role.setDescription("GYM CUSTOMER");
                     user = new Customer();
@@ -187,60 +140,30 @@ public class AdminDAOImpl implements UserDAO<SystemAdmin> {
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
                 user.setPasswordHash(rs.getString("password_hash"));
-
                 user.setRole(role);
                 user.setPhone(rs.getString("phone"));
                 user.setAdhaar(rs.getString("aadhaar_card"));
                 user.setAddress(rs.getString("address"));
-
-
-
-
                 list.add(user);
             }
-
-
-
-
-            return list;
-
-
-//            while (rs.next()) {
-//                System.out.println("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name") + ", Email: " + rs.getString("email"));
-//            }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Error retrieving all users: " + e.getMessage(), e);
         }
-
-        return new ArrayList<>();
+        return list;
     }
-
-//    @Override
-//    public List<SystemAdmin> getByRole(UserRole role) {
-//        return List.of();
-//    }
 
     @Override
     public void removeUser(SystemAdmin user) {
-        String sql = "DELETE FROM users WHERE userID = ?";
-        String sql2 = "DELETE FROM system_admins WHERE userID = ?";
-
-        try(Connection conn = com.flipfit.util.DBConnectionUtil.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            PreparedStatement pstmt2 = conn.prepareStatement(sql2)) {
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, user.getUserID());
-            pstmt2.setString(1, user.getUserID());
-
-            int rs = pstmt.executeUpdate();
-            int rs2 = pstmt2.executeUpdate();
-
-            System.out.println(rs+" row(s) in user deleted.");
-            System.out.println(rs2+" row(s) in gym_owner deleted.");
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new UserNotFoundException("Admin with ID " + user.getUserID() + " not found.");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error removing admin user: " + e.getMessage(), e);
         }
     }
 }

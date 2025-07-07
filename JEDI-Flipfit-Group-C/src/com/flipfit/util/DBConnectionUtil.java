@@ -12,7 +12,7 @@ public class DBConnectionUtil {
     // Replace with your actual database connection details
     private static final String URL = "jdbc:mysql://localhost:3306/flipfit_schema";
     private static final String USER = "root";
-    private static final String PASSWORD = "tarunteja";
+    private static final String PASSWORD = "mysqlroot";
 
 
     /**

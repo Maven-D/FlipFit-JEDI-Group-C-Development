@@ -1,19 +1,15 @@
 package com.flipfit.dao;
 
 import com.flipfit.bean.PaymentDetails;
+import com.flipfit.exception.DataAccessException;
+import com.flipfit.exception.PaymentFailedException;
 import com.flipfit.util.DBConnectionUtil;
 
 import java.sql.*;
 import java.util.Optional;
 
-/**
- * JDBC implementation of the PaymentDAO interface.
- */
 public class PaymentDAOImpl implements PaymentDAO {
 
-    /**
-     * Maps a row from a ResultSet to a PaymentDetails object.
-     */
     private PaymentDetails mapResultSetToPayment(ResultSet rs) throws SQLException {
         PaymentDetails payment = new PaymentDetails();
         payment.setPaymentID(rs.getString("payment_id"));
@@ -24,25 +20,21 @@ public class PaymentDAOImpl implements PaymentDAO {
     }
 
     @Override
-    public void save(PaymentDetails payment,String bookingId) {
-        // This query assumes the payments table does not need a booking_id for the initial insert.
+    public void save(PaymentDetails payment, String bookingId) {
         String sql = "INSERT INTO payments (payment_id, booking_id, amount, timestamp, status) VALUES (?, ?, ?, ?, ?)";
-
         try (Connection conn = DBConnectionUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, payment.getPaymentID());
             pstmt.setString(2, bookingId);
             pstmt.setDouble(3, payment.getAmount());
             pstmt.setTimestamp(4, Timestamp.valueOf(payment.getTimestamp()));
             pstmt.setString(5, payment.getStatus());
-
-            pstmt.executeUpdate();
-            System.out.println("DAO: Successfully saved payment " + payment.getPaymentID());
-
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new PaymentFailedException("Creating payment failed, no rows affected.");
+            }
         } catch (SQLException e) {
-            System.err.println("Error saving payment: " + e.getMessage());
-            e.printStackTrace();
+            throw new PaymentFailedException("Error saving payment: " + e.getMessage(), e);
         }
     }
 
@@ -51,7 +43,6 @@ public class PaymentDAOImpl implements PaymentDAO {
         String sql = "SELECT * FROM payments WHERE payment_id = ?";
         try (Connection conn = DBConnectionUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, paymentId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -59,8 +50,7 @@ public class PaymentDAOImpl implements PaymentDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error finding payment by ID: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Error finding payment by ID: " + e.getMessage(), e);
         }
         return Optional.empty();
     }
