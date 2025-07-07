@@ -34,12 +34,7 @@ public class FlipFitCustomerServiceImpl implements FlipFitCustomerServiceInterfa
     	customer.getBookingList().add(booking);
     }
 
-    /**
-     * Cancels a specific booking.
-     *
-     * @param booking The booking object to be cancelled.
-     * @return true if the booking was successfully cancelled, false otherwise.
-     */
+
     @Override
 	public boolean cancelBooking(String bookingId) {
         // 1. Add a validation check for the input bookingId.
