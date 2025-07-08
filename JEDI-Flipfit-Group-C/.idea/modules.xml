@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/JEDI-Flipfit-Group-C.iml" filepath="$PROJECT_DIR$/.idea/JEDI-Flipfit-Group-C.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flipfit-app.iml" filepath="$PROJECT_DIR$/flipfit-app.iml" />
     </modules>
   </component>
 </project>
